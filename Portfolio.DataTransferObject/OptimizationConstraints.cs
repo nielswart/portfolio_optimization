@@ -31,14 +31,14 @@ namespace PortfolioEngine
             this.SimpleConstraint = sconstr;
         }
 
-        public void AddBoxConstraint(List<string> assets, double lowerlimit, double upperlimit)
+        public void AddBoxConstraint(HashSet<string> assets, double lowerlimit, double upperlimit)
         {
             this.BoxConstr.Add(new BoxConstraints(assets, lowerlimit, upperlimit));
         }
 
         public void AddBoxConstraint(string asset, double lowerlimit, double upperlimit)
         {
-            this.BoxConstr.Add(new BoxConstraints( new List<string>{ asset }, lowerlimit, upperlimit));
+            this.BoxConstr.Add(new BoxConstraints( new HashSet<string>{ asset }, lowerlimit, upperlimit));
         }
 
         public void AddGroupConstraints(List<string> assets, double lowerlimit, double upperlimit)
@@ -51,7 +51,7 @@ namespace PortfolioEngine
     public struct BoxConstraints
     {
         [DataMember]
-        public List<string> Assets { get; private set; }
+        public HashSet<string> Assets { get; private set; }
 
         [DataMember]
         public double UpperLimit { get; private set; }
@@ -59,7 +59,7 @@ namespace PortfolioEngine
         [DataMember]
         public double LowerLimit { get; private set; }
 
-        public BoxConstraints(List<string> assets, double lowlim, double upperlim)
+        public BoxConstraints(HashSet<string> assets, double lowlim, double upperlim)
             : this()
         {
             this.Assets = assets;
