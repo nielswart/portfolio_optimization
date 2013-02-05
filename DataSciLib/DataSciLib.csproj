@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0E377E47-2DD9-40BB-AA4C-47EB38D6503D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataSciLib</RootNamespace>
+    <AssemblyName>DataSciLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accord">
+      <HintPath>..\packages\Accord.2.8.0.0\lib\Accord.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math">
+      <HintPath>..\packages\Accord.Math.2.8.0.0\lib\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Statistics">
+      <HintPath>..\packages\Accord.Statistics.2.8.0.0\lib\Accord.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge">
+      <HintPath>..\packages\AForge.2.2.4\lib\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Math">
+      <HintPath>..\packages\AForge.Math.2.2.4\lib\AForge.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\packages\MathNet.Numerics.2.3.0\lib\net40\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics.IO">
+      <HintPath>..\packages\MathNet.Numerics.2.3.0\lib\net40\MathNet.Numerics.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet, Version=1.5.0.0, Culture=neutral, PublicKeyToken=5f72f6e23c6920d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\R.NET.1.5.0\lib\net40\RDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="RDotNet.NativeLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5f72f6e23c6920d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\R.NET.1.5.0\lib\net40\RDotNet.NativeLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="zlib.net">
+      <HintPath>..\packages\zlib.net.1.0.4.0\lib\zlib.net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataStructures\ArrayExtensions.cs" />
+    <Compile Include="DataStructures\CovarianceMatrix.cs" />
+    <Compile Include="DataStructures\Distribution\Distribution.cs" />
+    <Compile Include="DataStructures\TimeSeries\ITimeSeries.cs" />
+    <Compile Include="DataStructures\TimeSeries\TimeSeries.cs" />
+    <Compile Include="DataStructures\TimeSeries\TimeSeriesEnums.cs" />
+    <Compile Include="DataStructures\TimeSeries\TimeSeriesExtensions.cs" />
+    <Compile Include="DataStructures\TimeSeries\TimeSeriesFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Optimization\QuadProg\Solver.cs" />
+    <Compile Include="REngine\PerformanceAnalytics\CAPM.cs" />
+    <Compile Include="REngine\PerformanceAnalytics\PerformanceRatios.cs" />
+    <Compile Include="REngine\PerformanceAnalytics\ReturnMetrics.cs" />
+    <Compile Include="REngine\PerformanceAnalytics\RiskMetrics.cs" />
+    <Compile Include="REngine\QuadProg\QuadProg.cs" />
+    <Compile Include="REngine\R.cs" />
+    <Compile Include="REngine\REngineException.cs" />
+    <Compile Include="REngine\REnums.cs" />
+    <Compile Include="REngine\Rmetrics\Constraints\fPortfolioConstraint.cs" />
+    <Compile Include="REngine\Rmetrics\fPortfolio.cs" />
+    <Compile Include="REngine\Rmetrics\fPortfolioData.cs" />
+    <Compile Include="REngine\Rmetrics\fPortfolioExtensions.cs" />
+    <Compile Include="REngine\Rmetrics\RmetricsEnums.cs" />
+    <Compile Include="REngine\Rmetrics\Specification\fPortfolioSpec.cs" />
+    <Compile Include="REngine\Rmetrics\Specification\ModelInfo.cs" />
+    <Compile Include="REngine\Rmetrics\Specification\PortfolioInfo.cs" />
+    <Compile Include="REngine\Rmetrics\Specification\SolverInfo.cs" />
+    <Compile Include="REngine\Rmetrics\timeSeries.cs" />
+    <Compile Include="REngine\RWorkspace.cs" />
+    <Compile Include="REngine\S4Class.cs" />
+    <Compile Include="Statistics\Centre.cs" />
+    <Compile Include="Statistics\Relation.cs" />
+    <Compile Include="Statistics\Variation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Readme\MathNet.Numerics.authors.txt" />
+    <Content Include="App_Readme\MathNet.Numerics.copyright.txt" />
+    <Content Include="App_Readme\MathNet.Numerics.readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
+    <Folder Include="Optimization\LinProg\" />
+    <Folder Include="Probability\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PerformanceLogger\PerformanceTools.csproj">
+      <Project>{01c7bac6-e032-4cde-85e8-f7f8ef5dd453}</Project>
+      <Name>PerformanceTools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

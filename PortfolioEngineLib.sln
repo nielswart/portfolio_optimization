@@ -1,0 +1,99 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Web
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioEngineLib", "POrtfolioEngine\PortfolioEngineLib.csproj", "{F7A4B10C-9DC2-459A-843D-F63CF7F5F911}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio.DataTransferObjects", "Portfolio.DataTransferObject\Portfolio.DataTransferObjects.csproj", "{D14BDB69-D1D7-4F23-B175-E0F23BBBC809}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioEngineLib.Tests", "PortfolioEngine.Tests\PortfolioEngineLib.Tests.csproj", "{B5BEE933-E827-475A-B1F2-587279A025AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSciLib", "DataSciLib\DataSciLib.csproj", "{0E377E47-2DD9-40BB-AA4C-47EB38D6503D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSciLib.Tests", "DataSciLib.Tests\DataSciLib.Tests.csproj", "{10100D69-70B2-4F81-806F-5E87102ED7E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerformanceTools", "PerformanceLogger\PerformanceTools.csproj", "{01C7BAC6-E032-4CDE-85E8-F7F8EF5DD453}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSciLib.IO", "DataSciLib.IO\DataSciLib.IO.csproj", "{A06CE60D-DDA5-4F26-8CA3-7BF53CA589A2}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://nielswart.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Portfolio.DataTransferObject\\Portfolio.DataTransferObjects.csproj
+		SccProjectName1 = Portfolio.DataTransferObject
+		SccLocalPath1 = Portfolio.DataTransferObject
+		SccProjectUniqueName2 = PortfolioEngine.Tests\\PortfolioEngineLib.Tests.csproj
+		SccProjectName2 = PortfolioEngine.Tests
+		SccLocalPath2 = PortfolioEngine.Tests
+		SccProjectUniqueName3 = POrtfolioEngine\\PortfolioEngineLib.csproj
+		SccProjectName3 = POrtfolioEngine
+		SccLocalPath3 = POrtfolioEngine
+		SccProjectUniqueName4 = DataSciLib\\DataSciLib.csproj
+		SccProjectName4 = DataSciLib
+		SccLocalPath4 = DataSciLib
+		SccProjectUniqueName5 = DataSciLib.Tests\\DataSciLib.Tests.csproj
+		SccProjectName5 = DataSciLib.Tests
+		SccLocalPath5 = DataSciLib.Tests
+		SccProjectUniqueName6 = PerformanceLogger\\PerformanceTools.csproj
+		SccProjectName6 = PerformanceLogger
+		SccLocalPath6 = PerformanceLogger
+		SccProjectUniqueName7 = DataSciLib.IO\\DataSciLib.IO.csproj
+		SccProjectName7 = DataSciLib.IO
+		SccLocalPath7 = DataSciLib.IO
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7A4B10C-9DC2-459A-843D-F63CF7F5F911}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A4B10C-9DC2-459A-843D-F63CF7F5F911}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{F7A4B10C-9DC2-459A-843D-F63CF7F5F911}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F7A4B10C-9DC2-459A-843D-F63CF7F5F911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A4B10C-9DC2-459A-843D-F63CF7F5F911}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7A4B10C-9DC2-459A-843D-F63CF7F5F911}.Release|x64.ActiveCfg = Release|Any CPU
+		{D14BDB69-D1D7-4F23-B175-E0F23BBBC809}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D14BDB69-D1D7-4F23-B175-E0F23BBBC809}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D14BDB69-D1D7-4F23-B175-E0F23BBBC809}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D14BDB69-D1D7-4F23-B175-E0F23BBBC809}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D14BDB69-D1D7-4F23-B175-E0F23BBBC809}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D14BDB69-D1D7-4F23-B175-E0F23BBBC809}.Release|x64.ActiveCfg = Release|Any CPU
+		{B5BEE933-E827-475A-B1F2-587279A025AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5BEE933-E827-475A-B1F2-587279A025AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5BEE933-E827-475A-B1F2-587279A025AD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B5BEE933-E827-475A-B1F2-587279A025AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5BEE933-E827-475A-B1F2-587279A025AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5BEE933-E827-475A-B1F2-587279A025AD}.Release|x64.ActiveCfg = Release|Any CPU
+		{0E377E47-2DD9-40BB-AA4C-47EB38D6503D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E377E47-2DD9-40BB-AA4C-47EB38D6503D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E377E47-2DD9-40BB-AA4C-47EB38D6503D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0E377E47-2DD9-40BB-AA4C-47EB38D6503D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E377E47-2DD9-40BB-AA4C-47EB38D6503D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E377E47-2DD9-40BB-AA4C-47EB38D6503D}.Release|x64.ActiveCfg = Release|Any CPU
+		{10100D69-70B2-4F81-806F-5E87102ED7E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10100D69-70B2-4F81-806F-5E87102ED7E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10100D69-70B2-4F81-806F-5E87102ED7E8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{10100D69-70B2-4F81-806F-5E87102ED7E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10100D69-70B2-4F81-806F-5E87102ED7E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10100D69-70B2-4F81-806F-5E87102ED7E8}.Release|x64.ActiveCfg = Release|Any CPU
+		{01C7BAC6-E032-4CDE-85E8-F7F8EF5DD453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01C7BAC6-E032-4CDE-85E8-F7F8EF5DD453}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01C7BAC6-E032-4CDE-85E8-F7F8EF5DD453}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{01C7BAC6-E032-4CDE-85E8-F7F8EF5DD453}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01C7BAC6-E032-4CDE-85E8-F7F8EF5DD453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01C7BAC6-E032-4CDE-85E8-F7F8EF5DD453}.Release|x64.ActiveCfg = Release|Any CPU
+		{A06CE60D-DDA5-4F26-8CA3-7BF53CA589A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A06CE60D-DDA5-4F26-8CA3-7BF53CA589A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A06CE60D-DDA5-4F26-8CA3-7BF53CA589A2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A06CE60D-DDA5-4F26-8CA3-7BF53CA589A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A06CE60D-DDA5-4F26-8CA3-7BF53CA589A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A06CE60D-DDA5-4F26-8CA3-7BF53CA589A2}.Release|x64.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

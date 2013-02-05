@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B5BEE933-E827-475A-B1F2-587279A025AD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PortfolioEngineLib.Tests</RootNamespace>
+    <AssemblyName>PortfolioEngineLib.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\PortfolioEngine\packages\MathNet.Numerics.2.2.1\lib\Net40\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics.IO">
+      <HintPath>..\PortfolioEngine\packages\MathNet.Numerics.2.2.1\lib\Net40\MathNet.Numerics.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="zlib.net">
+      <HintPath>..\PortfolioEngine\packages\zlib.net.1.0.4.0\lib\zlib.net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnnualizedReturnTest.cs" />
+    <Compile Include="CalcPortfolioTests.cs" />
+    <Compile Include="CalcEfficientFrontierTests.cs" />
+    <Compile Include="AnnualizedStdDevTest.cs" />
+    <Compile Include="CorrelationMatrixTest.cs" />
+    <Compile Include="InformationRatioTests.cs" />
+    <Compile Include="RealizedAlphaTests.cs" />
+    <Compile Include="RealizedBetaTests.cs" />
+    <Compile Include="SharpeRatioTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SortinoRatioTests.cs" />
+    <Compile Include="VaRTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="returns_20121012.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="small_test.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataSciLib.IO\DataSciLib.IO.csproj">
+      <Project>{a06ce60d-dda5-4f26-8ca3-7bf53ca589a2}</Project>
+      <Name>DataSciLib.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataSciLib\DataSciLib.csproj">
+      <Project>{0e377e47-2dd9-40bb-aa4c-47eb38d6503d}</Project>
+      <Name>DataSciLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PerformanceLogger\PerformanceTools.csproj">
+      <Project>{01c7bac6-e032-4cde-85e8-f7f8ef5dd453}</Project>
+      <Name>PerformanceTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Portfolio.DataTransferObject\Portfolio.DataTransferObjects.csproj">
+      <Project>{D14BDB69-D1D7-4F23-B175-E0F23BBBC809}</Project>
+      <Name>Portfolio.DataTransferObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PortfolioEngine\PortfolioEngineLib.csproj">
+      <Project>{F7A4B10C-9DC2-459A-843D-F63CF7F5F911}</Project>
+      <Name>PortfolioEngineLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Readme\MathNet.Numerics.authors.txt" />
+    <Content Include="App_Readme\MathNet.Numerics.copyright.txt" />
+    <Content Include="App_Readme\MathNet.Numerics.readme.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
