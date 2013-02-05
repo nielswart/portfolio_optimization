@@ -58,19 +58,13 @@ namespace PortfolioEngine
         /// 
         /// </summary>
         /// <param name="portfset"></param>
-        /// <param name="meanvector"></param>
-        /// <param name="covariance"></param>
+        /// <param name="meanVar"></param>
         /// <returns></returns>
-        public IPortfolioCollection CalcEfficientFrontier(PortfolioSettings portfset, SortedList<string, double> meanvector, double[,] covariance)
+        public IPortfolioCollection CalcEfficientFrontier(PortfolioSettings portfset, List<MeanVariance> meanVar)
         {
-            return EfficientFrontier.CalculateMVFrontier(portfset, meanvector, covariance);
+            return EfficientFrontier.CalculateMVFrontier(portfset, meanVar);
         }
-
-        public IPortfolioCollection CalcEfficientFrontier(PortfolioSettings portfset, SortedList<string, double> meanvector, CovarianceMatrix covariance)
-        {
-            return EfficientFrontier.CalculateMVFrontier(portfset, meanvector, covariance);
-        }
-
+        
         public IPortfolio CalcPortfolio(PortfolioSettings portfset, ITimeSeries<double> data)
         {
             throw new NotImplementedException();
