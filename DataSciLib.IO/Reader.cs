@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataSciLib.IO
 {
-    public class Read
+    public class Reader
     {
     }
 }
