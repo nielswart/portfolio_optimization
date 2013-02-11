@@ -11,33 +11,21 @@ namespace DataSciLib.DataStructures
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface ITimeSeries<T> : IEnumerable<TimeSeriesItem<T>> 
+    public interface ITimeSeries<T> 
     {
-        T[,] DataMatrix { get; }  
+        double[] Data;
 
         DateTime[] DateTime { get; }
 
-        string[] Names { get; }
-
-        ITimeSeries<T> this[string name] { get; }
-
-        ITimeSeries<T> this[string[] names] { get; }
+        string Name;
 
         ITimeSeries<T> this[DateTime date] { get; }
 
         ITimeSeries<T> this[DateTime[] dates] { get; }
 
-        T this[DateTime date, string name] { get; }
-
-        ITimeSeries<T> this[DateTime[] dates, string[] names] { get; }
-
         void RowBind(ITimeSeries<T> timeseries);
 
-        void ColumnBind(ITimeSeries<T> timeseries);
-
         int RowCount { get; }
-
-        int ColumnCount { get; }
 
     }
 }
