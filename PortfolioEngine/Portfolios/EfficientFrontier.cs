@@ -21,20 +21,10 @@ namespace PortfolioEngine.Portfolios
             
         }
 
-        public static IPortfolioCollection CalculateMVFrontier(PortfolioSettings portfset, SortedList<string, double> mean, double[,] covariance)
-        {
-            var mvfrontier = new MVOFrontier(portfset, mean, covariance);
-            mvfrontier.Calculate();
-
-            var portfCollection = new PortfolioCollection();
-            portfCollection.AddMetrics(mvfrontier.ResultsCollection);
-            return portfCollection;
-        }
-
-        public static IPortfolioCollection CalculateMVFrontier(PortfolioSettings portfset, SortedList<string, double> mean, CovarianceMatrix covariance)
+        public static IPortfolioCollection CalculateMVFrontier(PortfolioSettings portfset, List<MeanVariance> meanVar)
         {
             PerformanceLogger.Start("EfficientFrontier", "CalculateMVFrontier", "MVOFrontier.Calculate");
-            var mvfrontier = new MVOFrontier(portfset, mean, covariance);
+            var mvfrontier = new MVOFrontier(portfset, meanVar);
             mvfrontier.Calculate();
             PerformanceLogger.Stop("EfficientFrontier", "CalculateMVFrontier", "MVOFrontier.Calculate");
 

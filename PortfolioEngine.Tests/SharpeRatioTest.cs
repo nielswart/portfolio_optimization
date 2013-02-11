@@ -26,7 +26,7 @@ namespace PortfolioEngineLib.Tests
         [TestMethod]
         public void CheckParametersTest()
         {
-            var res = PortfolioEngine.Analytics.SharpeRatio(TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100, 1));
+            var res = PortfolioEngine.Analytics.SharpeRatio(TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 1));
             // Check output type
             Assert.IsNotNull(res);
             //Assert.IsInstanceOf(typeof(double[]), res);
@@ -56,7 +56,7 @@ namespace PortfolioEngineLib.Tests
             for (int c = 0; c < runs; c++)
             {
                 TimeSeriesFactory<double>.SampleData.RandomSeed = c;
-                res[c] = PortfolioEngine.Analytics.SharpeRatio(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100, 1), rf).First();
+                res[c] = PortfolioEngine.Analytics.SharpeRatio(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100), rf).Value;
                 Console.WriteLine("SR: {0}", res[c]);
             }
             var meanoutp = (mean * 252 - rf) / (stddev * Math.Sqrt(252));

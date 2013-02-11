@@ -134,9 +134,9 @@
       <Project>{01c7bac6-e032-4cde-85e8-f7f8ef5dd453}</Project>
       <Name>PerformanceTools</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Portfolio.DataTransferObject\Portfolio.DataTransferObjects.csproj">
+    <ProjectReference Include="..\Portfolio.DataTransferObject\Portfolio.DataStructures.csproj">
       <Project>{D14BDB69-D1D7-4F23-B175-E0F23BBBC809}</Project>
-      <Name>Portfolio.DataTransferObjects</Name>
+      <Name>Portfolio.DataStructures</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

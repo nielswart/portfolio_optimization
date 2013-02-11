@@ -2,6 +2,8 @@
 //
 
 using System;
+using Stats = MathNet.Numerics.Statistics;
+
 
 namespace DataSciLib.DataStructures
 {
@@ -33,29 +35,61 @@ namespace DataSciLib.DataStructures
             throw new NotImplementedException();
         }
 
-        public static double[] AnnualisedMean<T>(this ITimeSeries<T> timeseries)
+        public static double AnnualisedMean(this ITimeSeries<double> timeseries)
+        {
+            if (timeseries.IntegrationOrder == 0)
+            {
+                return Stats.Statistics.Mean(timeseries.Data) * timeseries.GetFrequency();
+            }
+            else
+                return Stats.Statistics.Mean(timeseries.Returns<double>().Data) * timeseries.GetFrequency();
+        }
+
+        public static double AnnualisedStdDev(this ITimeSeries<double> timeseries)
+        {
+            if (timeseries.IntegrationOrder == 0)
+            {
+                return Stats.Statistics.Mean(timeseries.Data) * Math.Sqrt(timeseries.GetFrequency());
+            }
+            else
+                return Stats.Statistics.StandardDeviation(timeseries.Returns<double>().Data) * Math.Sqrt(timeseries.GetFrequency());
+        }
+
+        public static ITimeSeries<T> Returns<T>(this ITimeSeries<double> timeseries, ReturnMethod method = ReturnMethod.Geometric)
         {
             throw new NotImplementedException();
         }
 
-        public static double[] AnnualisedStdDev<T>(this ITimeSeries<T> timeseries)
+        public static ITimeSeries<T> Cumulate<T>(this ITimeSeries<double> timeseries, double baseVal = 100)
         {
             throw new NotImplementedException();
         }
 
-        public static ITimeSeries<T> Returns<T>(this ITimeSeries<T> timeseries, CalculationMethod method = CalculationMethod.Geometric)
+        public static IMultiTimeSeries<T> ColumnBind<T>(this ITimeSeries<T> timeseries, ITimeSeries<T> newtimeseries)
         {
             throw new NotImplementedException();
         }
 
-        public static ITimeSeries<T> Cumulate<T>(this ITimeSeries<T> timeseries, double baseVal = 100)
+        public static ITimeSeries<T> RowBind<T>(this ITimeSeries<T> timeseries, ITimeSeries<T> newtimeseries)
         {
             throw new NotImplementedException();
         }
 
-        public static ITimeSeries<T> Concat<T>(this ITimeSeries<T> first, ITimeSeries<T> second)
+        public static IMultiTimeSeries<T> RowBind<T>(this IMultiTimeSeries<T> timeseries, IMultiTimeSeries<T> newtimeseries)
         {
             throw new NotImplementedException();
         }
+
+
+        public static T First<T>(this ITimeSeries<T> timeseries)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static T Last<T>(this ITimeSeries<T> timeseries)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

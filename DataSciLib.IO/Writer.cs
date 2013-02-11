@@ -58,6 +58,11 @@ namespace DataSciLib.IO
                 builder.Remove(builder.Length - 1, 1);
                 WriteLine(builder.ToString());
             }
-        }     
+        }
+
+        public void XLSX(List<string[]> data)
+        {
+      
+        }
     }
 }

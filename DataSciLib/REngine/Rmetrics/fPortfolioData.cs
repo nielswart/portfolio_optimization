@@ -47,8 +47,8 @@ namespace DataSciLib.REngine.Rmetrics
         
         public static fPortfolioData Create(ITimeSeries<double> timeseries, fPortfolioSpec spec)
         {
-            return new fPortfolioData(portfolioData().Invoke(new SymbolicExpression[] { timeSeries.Create(timeseries.DataMatrix, 
-                timeseries.DateTime, timeseries.Names).Expression, spec.Expression }));
+            return new fPortfolioData(portfolioData().Invoke(new SymbolicExpression[] { timeSeries.Create(timeseries.Data, 
+                timeseries.DateTime, timeseries.Name).Expression, spec.Expression }));
         }
 
         

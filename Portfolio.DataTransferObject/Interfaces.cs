@@ -17,7 +17,7 @@ namespace PortfolioEngine
         /// <summary>
         /// 
         /// </summary>
-        string ID { get; }
+        string Name { get; }
 
         ITimeSeries<double> PriceSeries { get; set; }
     }
@@ -27,7 +27,7 @@ namespace PortfolioEngine
     /// </summary>
     public interface IPortfolio : IInstrument
     {
-        double[] Weights { get; }
+        IEnumerable<ArrayItem<string, double>> Weights { get; }
         
         Dictionary<VMetrics, double[]> VectorMetrics { get; }
 

@@ -70,9 +70,9 @@ namespace PortfolioEngine
             throw new NotImplementedException();
         }
 
-        public IPortfolio CalcPortfolio(ITimeSeries<double> data, double[] weights)
+        public IPortfolio CalcPortfolio(IEnumerable<Tuple<ITimeSeries<double>, double>> portfolioWeights)
         {
-            return PortfolioFactory.Create(data, weights);
+            return PortfolioFactory.Create(portfolioWeights);
         }
     }
 }

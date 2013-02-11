@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PortfolioEngine
 {
-    public class ResultSet<T>
+    public class MetricsCollection<T>
     {
         public Dictionary<Metrics, T> Metrics;
 
@@ -15,12 +15,12 @@ namespace PortfolioEngine
 
         public int ID { get; private set; }
 
-        public ResultSet(Dictionary<Metrics, T> metrics, Dictionary<VMetrics, T[]> vmetrics, 
+        public MetricsCollection(Dictionary<Metrics, T> metrics, Dictionary<VMetrics, T[]> vmetrics, 
             Dictionary<MatrixMetrics, T[,]> mmetrics)
         {
         }
 
-        public ResultSet(int id)
+        public MetricsCollection(int id)
         {
             this.ID = id;
             Metrics = new Dictionary<Metrics, T>();

@@ -13,7 +13,7 @@ namespace DataSciLib.DataStructures
         Daily
     }
 
-    public enum CalculationMethod
+    public enum ReturnMethod
     {
         Geometric,
         Arithmetic

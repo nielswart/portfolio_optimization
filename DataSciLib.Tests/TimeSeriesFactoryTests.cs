@@ -10,12 +10,12 @@ namespace TimeSeries.Tests
     [TestClass]
     public class TimeSeriesFactoryTests
     {
-        [TestMethod]
-        public void CreateFromFile()
-        {
-            var timeseries = TimeSeriesFactory<double>.FromFile("small_test.csv");
-            Console.WriteLine(timeseries.DataMatrix.Print());
-        }
+        //[TestMethod]
+        //public void CreateFromFile()
+        //{
+        //    var timeseries = TimeSeriesFactory<double>.FromFile("small_test.csv");
+        //    Console.WriteLine(timeseries.DataMatrix.Print());
+        //}
 
         [TestMethod]
         public void CreateFromVector()
@@ -26,16 +26,11 @@ namespace TimeSeries.Tests
         [TestMethod]
         public void CreateGaussianSample()
         {
-            var ts = TimeSeriesFactory<double>.SampleData.Gaussian.Create(0.01, 0.02, numseries: 10, freq: DataFrequency.Monthly);
-
-            Assert.AreEqual(ts.ColumnCount, 10);
+            var ts = TimeSeriesFactory<double>.SampleData.Gaussian.Create(0.01, 0.02, freq: DataFrequency.Monthly);
             Assert.AreEqual(ts.RowCount, 100);
 
-            Console.WriteLine(ts.DataMatrix.Print());
-            foreach (var n in ts.Names)
-            {
-                Console.WriteLine(n);
-            }
+            Console.WriteLine(ts.Data.Print());
+            Console.WriteLine(ts.Name);
         }
 
     }

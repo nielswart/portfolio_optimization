@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using DataSciLib.REngine;
 using DataSciLib.REngine.Rmetrics;
 using RDotNet;
 

@@ -7,10 +7,6 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using RDotNet;
-using DataSciLib;
-using DataSciLib.REngine.Rmetrics;
-using DataSciLib.REngine.Rmetrics.Constraints;
-using DataSciLib.REngine.Rmetrics.Specification;
 using DataSciLib.DataStructures;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -163,74 +159,5 @@ namespace REngine.Tests
             //var ts = timeSeries.Create(TimeSeriesFactory<double>.SampleData.Gaussian.Create(0.01, 0.02, numseries: 10, freq: DataFrequency.Monthly));
             
         }
-
-        [TestMethod]
-        public void CallFunctionTest()
-        {
-            var weight = 1.0 / 10;
-            double[] weights = new double[10];
-            for (int i = 0; i < 10; i++)
-            {
-                weights[i] = weight;
-            }
-            var spec = fPortfolioSpec.Create(weights);
-            Engine.Print(spec.Expression);
-
-            var constr = fPortfolioConstraint.Create();
-            Engine.Print(constr.Expression);
-            Engine.Print(spec.Expression);
-
-            /*
-            Assert.DoesNotThrow(() =>
-            {
-                /*
-                Engine.CallFunction("feasiblePortfolio",
-                    timeSeries.Create(TimeSeriesFactory<double>.SampleData.Gaussian.Create(0.01, 0.02, numseries: 10, freq: DataFrequency.Monthly)).Expression,
-                    spec.Expression,
-                    constr.Expression);
-                 
-            });
-        */
-        }
-
-        [TestMethod]
-        public void FunctionCallPerformanceTest()
-        {
-            int runs = 100;
-
-            var mean = 0.001;
-            var stddev = 0.02;
-            List<double[,]> res = new List<double[,]>();
-            var starttime = DateTime.Now;
-
-            var weight = 1.0 / 10;
-            double[] weights = new double[10];
-            for (int i = 0; i < 10; i++)
-            {
-                weights[i] = weight;
-            }
-
-            var spec = fPortfolioSpec.Create(weights);
-            Engine.Print(spec.Expression);
-
-            var constr = fPortfolioConstraint.Create();
-            Engine.Print(constr.Expression);
-
-            for (int c = 0; c < runs; c++)
-            {
-                /*
-                Engine.CallFunction("feasiblePortfolio",
-                    timeSeries.Create(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, numseries: 10, freq: DataFrequency.Monthly)).Expression,
-                    spec.Expression,
-                    constr.Expression);
-                */
-                Console.WriteLine(c);
-            }
-
-            var stoptime = DateTime.Now;
-            Console.WriteLine("{0} milliseconds per calculation", (stoptime - starttime).Milliseconds / runs);
-        }
-
-
     }
 }

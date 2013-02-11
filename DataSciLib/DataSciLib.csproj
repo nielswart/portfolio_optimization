@@ -81,7 +81,10 @@
     <Compile Include="DataStructures\ArrayExtensions.cs" />
     <Compile Include="DataStructures\CovarianceMatrix.cs" />
     <Compile Include="DataStructures\Distribution\Distribution.cs" />
+    <Compile Include="DataStructures\CollectionItems.cs" />
     <Compile Include="DataStructures\TimeSeries\ITimeSeries.cs" />
+    <Compile Include="DataStructures\TimeSeries\MultiTimeSeries.cs" />
+    <Compile Include="DataStructures\TimeSeries\MultiTimeSeriesFactory.cs" />
     <Compile Include="DataStructures\TimeSeries\TimeSeries.cs" />
     <Compile Include="DataStructures\TimeSeries\TimeSeriesEnums.cs" />
     <Compile Include="DataStructures\TimeSeries\TimeSeriesExtensions.cs" />
@@ -96,15 +99,7 @@
     <Compile Include="REngine\R.cs" />
     <Compile Include="REngine\REngineException.cs" />
     <Compile Include="REngine\REnums.cs" />
-    <Compile Include="REngine\Rmetrics\Constraints\fPortfolioConstraint.cs" />
-    <Compile Include="REngine\Rmetrics\fPortfolio.cs" />
-    <Compile Include="REngine\Rmetrics\fPortfolioData.cs" />
-    <Compile Include="REngine\Rmetrics\fPortfolioExtensions.cs" />
     <Compile Include="REngine\Rmetrics\RmetricsEnums.cs" />
-    <Compile Include="REngine\Rmetrics\Specification\fPortfolioSpec.cs" />
-    <Compile Include="REngine\Rmetrics\Specification\ModelInfo.cs" />
-    <Compile Include="REngine\Rmetrics\Specification\PortfolioInfo.cs" />
-    <Compile Include="REngine\Rmetrics\Specification\SolverInfo.cs" />
     <Compile Include="REngine\Rmetrics\timeSeries.cs" />
     <Compile Include="REngine\RWorkspace.cs" />
     <Compile Include="REngine\S4Class.cs" />

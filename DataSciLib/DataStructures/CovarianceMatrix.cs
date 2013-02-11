@@ -36,6 +36,11 @@ namespace DataSciLib.DataStructures
                 throw new FileNotFoundException();
         }
 
+        public static CovarianceMatrix Create(IEnumerable<IEnumerable<ArrayItem<string, double>>> varCov)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// NOT YET IMPLEMENTED
         /// </summary>
@@ -47,8 +52,6 @@ namespace DataSciLib.DataStructures
         {
             throw new NotImplementedException();
         }
-
-        
     }
 
     public static class CovarianceExtensions

@@ -26,7 +26,7 @@ namespace PortfolioEngineLib.Tests
         [TestMethod]
         public void CheckParametersTest()
         {
-            var res = PortfolioEngine.Analytics.RealisedBeta(TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100, 1), TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100, 1));
+            var res = PortfolioEngine.Analytics.RealisedBeta(TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100), TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100));
             // Check output type
             Assert.IsNotNull(res);
             Assert.IsInstanceOfType(res, typeof(double[]));
@@ -67,8 +67,8 @@ namespace PortfolioEngineLib.Tests
 
             for (int c = 0; c < runs; c++)
             {
-                res[c] = PortfolioEngine.Analytics.RealisedBeta(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100, 1),
-                    TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100, 1)).First();
+                res[c] = PortfolioEngine.Analytics.RealisedBeta(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100),
+                    TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100)).Value;
             }
 
             var stoptime = DateTime.Now;
@@ -81,8 +81,8 @@ namespace PortfolioEngineLib.Tests
             var mean = 0.001;
             var stddev = 0.02;
 
-            var res = PortfolioEngine.Analytics.RealisedBeta(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100, 10),
-                TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100, 1));
+            var res = PortfolioEngine.Analytics.RealisedBeta(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100),
+                TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100)).Value;
 
             Console.WriteLine(res.Print());
         }

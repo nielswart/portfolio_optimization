@@ -5,9 +5,7 @@ using System.Text;
 using DataSciLib.DataStructures;
 
 namespace PortfolioEngine
-{
-
-    
+{    
     /// <summary>
     /// Represents the mean and variance-covariance of each variable (instrument)
     /// </summary>

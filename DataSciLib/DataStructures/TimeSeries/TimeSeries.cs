@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DataSciLib.DataStructures
 {
@@ -16,47 +17,24 @@ namespace DataSciLib.DataStructures
     /// <summary>
     /// 
     /// </summary>
-    public sealed class TimeSeries<T> : ITimeSeries<T>, IEnumerable<TimeItem<T>> 
+    public class TimeSeries<T> : ITimeSeries<T>
     {
         #region Internal storage mechanism
-
-        private Dictionary<DateTime, T[]> _dateValueDict;
-        private Dictionary<string, T[]> _nameValueDict;
+        // Hashtable type data storage for quick searching, automatically sorted
+        protected SortedList<DateTime, T> _timeDataDict;
 
         #endregion
 
         #region Indexers
-        public ITimeSeries<T> this[string name]
+        public T this[DateTime date]
         {
             get
             {
-                return TimeSeriesFactory<T>.Create(_nameValueDict[name], this.DateTime, name);
-            }
-            private set { }
-        }
-
-        public ITimeSeries<T> this[string[] names]
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            private set
-            {
-
+                return _timeDataDict[date];
             }
         }
 
-        public ITimeSeries<T> this[DateTime date]
-        {
-            get
-            {
-                return TimeSeriesFactory<T>.Create(_dateValueDict[date], date, this.Names);
-            }
-            private set { }
-        }
-
-        public ITimeSeries<T> this[DateTime[] dates]
+        public ITimeSeries<T> this[IEnumerable<DateTime> dates]
         {
             get
             {
@@ -64,36 +42,34 @@ namespace DataSciLib.DataStructures
             }
             private set { }
         }
-
-        public T this[DateTime date, string name]
-        {
-            get
-            {
-                return TimeSeriesFactory<T>.Create(_dateValueDict[date], date, this.Names)[name].DataMatrix[0, 0];
-            }
-            private set { }
-        }
-
-        public ITimeSeries<T> this[DateTime[] dates, string[] names]
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            private set { }
-        }
-
         #endregion
 
         #region Public Properties
-
+        // Convenience methods for retrieving the data from internal structures
         public DateTime[] DateTime
-        { get; private set; }
+        {
+            get
+            {
+                return _timeDataDict.Keys.ToArray();
+            }
+        }
 
-        public T[,] DataMatrix
-        { get; private set; }
+        // Column major format
+        public T[] Data
+        {
+            get
+            {
+                return _timeDataDict.Values.ToArray();
+            }
+        }
 
-        public string[] Names
+        public string Name
+        {
+            get;
+            private set;
+        }
+
+        public int IntegrationOrder
         {
             get;
             private set;
@@ -101,12 +77,7 @@ namespace DataSciLib.DataStructures
 
         public int RowCount
         {
-            get { return DateTime.Length; }
-        }
-
-        public int ColumnCount
-        {
-            get { return Names.Length; }
+            get { return _timeDataDict.Count; }
         }
 
         #endregion
@@ -117,125 +88,23 @@ namespace DataSciLib.DataStructures
         /// </summary>
         public TimeSeries()
         {
-            DataMatrix = new T[,] { { }, { } };
-            DateTime = new DateTime[] {};
-            Names = new string[] {};
+            Name = "Series1";
 
-            _dateValueDict = new Dictionary<DateTime, T[]>();
-            _nameValueDict = new Dictionary<string, T[]>();
+            _timeDataDict = new SortedList<DateTime, T>();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="timevector"></param>
-        public TimeSeries(T[,] data, string[] timevector, string[] names)
+        public TimeSeries(IEnumerable<TimeDataPoint<T>> datapoints, string name)
         {
-            // Check to see if date and data dimensions agree
-            if (data.GetLength(0) == timevector.GetLength(0))
+            _timeDataDict = new SortedList<DateTime, T>();
+
+            foreach (var d in datapoints)
             {
-                DataMatrix = data;
-                // Initialize with correct size
-                DateTime = new DateTime[timevector.GetLength(0)];
-
-                _dateValueDict = new Dictionary<DateTime, T[]>();
-                _nameValueDict = new Dictionary<string, T[]>();
-                int dc = 0;
-
-                foreach (string s in timevector)
-                {
-                    var date = ConvertToDate(s);
-                    DateTime[dc] = date;
-
-                    T[] vectc = new T[data.GetLength(1)];
-                    vectc = data.GetRow(dc);
-                    _dateValueDict.Add(date, vectc);
-                    dc++;
-                }
-                dc = 0;
-                foreach (var n in names)
-                {
-                    T[] vectr = new T[data.GetLength(0)];
-                    vectr = data.GetColumn(dc);
-                    _nameValueDict.Add(n, vectr);
-                    dc++;
-                }
-
-                Names = names;
+                _timeDataDict.Add(d.Date, d.Value);
             }
-            else
-                throw new ArgumentException("Data and date dimensions do not agree");
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="timevector"></param>
-        /// <param name="names"></param>
-        public TimeSeries(T[,] data, DateTime[] timevector, string[] names)
-        {
-            // Check to see if date and data dimensions agree
-            if (data.GetLength(0) == timevector.GetLength(0))
-            {
-                DataMatrix = data;
-                DateTime = timevector;
-
-                _dateValueDict = new Dictionary<DateTime, T[]>();
-                _nameValueDict = new Dictionary<string, T[]>();
-                int dc = 0;
-
-                foreach (var d in timevector)
-                {
-                    T[] vectc = new T[data.GetLength(1)];
-                    for (int i = 0; i < data.GetLength(1); i++)
-                    {
-                        vectc[i] = data[dc, i];
-                    }
-                    _dateValueDict.Add(d, vectc);
-                    dc++;
-                }
-                dc = 0;
-                foreach (var n in names)
-                {
-                    T[] vectr = new T[data.GetLength(0)];
-                    for (int r = 0; r < data.GetLength(0); r++)
-                    {
-                        vectr[r] = data[r, dc];
-                    }
-                    _nameValueDict.Add(n, vectr);
-                    dc++;
-                }
-
-                Names = names;
-            }
-            else
-                throw new ArgumentException("Data and date dimensions do not agree");
-        }
-
+        
         #endregion
-
-        public void RowBind(ITimeSeries<T> newtimeseries)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ColumnBind(ITimeSeries<T> newtimeseries)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ITimeSeries<T> Exclude(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ITimeSeries<T> Exclude(string[] names)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public ITimeSeries<T> Exclude(DateTime date)
         {
             throw new NotImplementedException();
@@ -246,17 +115,11 @@ namespace DataSciLib.DataStructures
             throw new NotImplementedException();
         }
 
-        public IEnumerator<TimeSeriesItem<T>> GetEnumerator()
+        public IEnumerator<TimeDataPoint<T>> GetEnumerator()
         {
-            int rows = DataMatrix.GetLength(0);
-            int cols = DataMatrix.GetLength(1);
-
-            for (int c = 0; c < cols; c++)
+            foreach (var td in _timeDataDict)
             {
-                for (int r = 0; r < rows; c++)
-                {
-                    yield return new TimeSeriesItem<T>(this.DateTime[r], this.Names[c], DataMatrix[r, c]);
-                }
+                yield return new TimeDataPoint<T>(td.Key, td.Value);
             }
         }
 
@@ -277,4 +140,74 @@ namespace DataSciLib.DataStructures
         }
         #endregion
     }
+
+    /// <summary>
+    /// Non-generic implementation of TimeSeries of type double
+    /// </summary>
+    public sealed class TimeSeries : TimeSeries<double>
+    {
+        public TimeSeries(IEnumerable<TimeDataPoint<double>> datapoints, string name)
+        {
+            _timeDataDict = new SortedList<DateTime, double>();
+
+            foreach (var d in datapoints)
+            {
+                _timeDataDict.Add(d.Date, d.Value);
+            }
+        }
+
+        // Operator overloads
+        public static TimeSeries operator +(TimeSeries ts1, TimeSeries ts2)
+        {
+            //add corresponding elements that match on time
+            List<TimeDataPoint<double>> newts = new List<TimeDataPoint<double>>();
+            foreach (var td in ts1)
+            {
+                var sum = td.Value + ts2[td.Date];
+                newts.Add(new TimeDataPoint<double>(td.Date, sum));
+            }
+
+            return new TimeSeries(newts, "Sum of " + ts1.Name + " and " + ts2.Name);
+        }
+
+        public static TimeSeries operator -(TimeSeries ts1, TimeSeries ts2)
+        {
+            //add corresponding elements that match on time
+            List<TimeDataPoint<double>> newts = new List<TimeDataPoint<double>>();
+            foreach (var td in ts1)
+            {
+                var answ = td.Value - ts2[td.Date];
+                newts.Add(new TimeDataPoint<double>(td.Date, answ));
+            }
+
+            return new TimeSeries(newts, "Difference between " + ts1.Name + " and " + ts2.Name);
+        }
+
+        public static TimeSeries operator *(TimeSeries ts1, double multiplier)
+        {
+            //add corresponding elements that match on time
+            List<TimeDataPoint<double>> newts = new List<TimeDataPoint<double>>();
+            foreach (var td in ts1)
+            {
+                var answ = td.Value * multiplier;
+                newts.Add(new TimeDataPoint<double>(td.Date, answ));
+            }
+
+            return new TimeSeries(newts, ts1.Name);
+        }
+
+        public static TimeSeries operator /(TimeSeries ts1, double div)
+        {
+            //add corresponding elements that match on time
+            List<TimeDataPoint<double>> newts = new List<TimeDataPoint<double>>();
+            foreach (var td in ts1)
+            {
+                var answ = td.Value / div;
+                newts.Add(new TimeDataPoint<double>(td.Date, answ));
+            }
+
+            return new TimeSeries(newts, ts1.Name);
+        }
+    }
+
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using DataSciLib.REngine.Rmetrics;
+using DataSciLib.REngine;
 using DataSciLib.DataStructures;
 
 namespace PortfolioEngine.Portfolios
@@ -33,12 +33,9 @@ namespace PortfolioEngine.Portfolios
         /// <param name="data"></param>
         /// <param name="weights"></param>
         /// <returns></returns>
-        public static IPortfolio Create(ITimeSeries<double> data, double[] weights, Rebalance rebalance = Rebalance.Never)
+        public static IPortfolio Create(IEnumerable<Tuple<ITimeSeries<double>,double>> weightsData, Rebalance rebalance = Rebalance.Never)
         {
             var gentp = new GeneralPortfolio();
-
-            if (data.ColumnCount != weights.Length)
-                throw new ArgumentException("Number of elements in weight vector does not match the number of timeseries");
 
             switch (rebalance)
             {
@@ -67,26 +64,26 @@ namespace PortfolioEngine.Portfolios
             throw new NotImplementedException();
         }
 
-        public static IPortfolio Create(ResultSet<double> results)
+        public static IPortfolio Create(MetricsCollection<double> results)
         {
             var gentp = new GeneralPortfolio();
 
             gentp.Metrics = results.Metrics;
             gentp.VectorMetrics = results.VectorMetrics;
-            gentp.Weights = results.VectorMetrics[VMetrics.Weights];
+            //gentp.Weights = results.VectorMetrics[VMetrics.Weights];
             gentp.MatrixMetrics = results.MatrixMetrics;
 
             // Calculate PortfolioValue timeseries
             return gentp;
         }
 
-        public static IPortfolio Create(ResultSet<double> results, int id)
+        public static IPortfolio Create(MetricsCollection<double> results, int id)
         {
             var gentp = new GeneralPortfolio(id.ToString());
 
             gentp.Metrics = results.Metrics;
             gentp.VectorMetrics = results.VectorMetrics;
-            gentp.Weights = results.VectorMetrics[VMetrics.Weights];
+            //gentp.Weights = results.VectorMetrics[VMetrics.Weights];
             gentp.MatrixMetrics = results.MatrixMetrics;
 
             return gentp;

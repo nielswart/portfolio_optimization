@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DataSciLib.DataStructures;
-using DataSciLib.REngine.Rmetrics;
-using DataSciLib.REngine.Rmetrics.Specification;
-using DataSciLib.REngine.Rmetrics.Constraints;
+using DataSciLib.REngine;
 
 namespace PortfolioEngine.Settings
 {
@@ -14,7 +12,7 @@ namespace PortfolioEngine.Settings
         private int _numfp;
         private double _rf;
 
-        public ResultSet<double> Results { get; protected set; }
+        public MetricsCollection<double> Results { get; protected set; }
 
         public MVOMinVariance(PortfolioSpecification spec, OptimizationConstraints constr)
         {
@@ -36,6 +34,7 @@ namespace PortfolioEngine.Settings
 
         }
         
+        /*
         #region Extractor function wrappers
         private double[,] getCorrelationMatrix(fPortfolio rmetricsportfolio)
         {
@@ -86,5 +85,6 @@ namespace PortfolioEngine.Settings
             return risk;
         }
         #endregion
+         * */
     }
 }

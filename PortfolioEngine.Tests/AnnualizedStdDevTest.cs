@@ -26,7 +26,7 @@ namespace PortfolioEngineLib.Tests
         [TestMethod]
         public void CheckParametersTest()
         {
-            var res = PortfolioEngine.Analytics.AnnualisedStdDev(TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100, 1));
+            var res = PortfolioEngine.Analytics.AnnualisedStdDev(TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100));
             // Check output type
             Assert.IsNotNull(res);
             Assert.IsInstanceOfType(res, typeof(double[]));
@@ -45,7 +45,7 @@ namespace PortfolioEngineLib.Tests
 
             for (int c = 0; c < runs; c++)
             {
-                res[c] = PortfolioEngine.Analytics.AnnualisedStdDev(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100, 1)).First();
+                res[c] = PortfolioEngine.Analytics.AnnualisedStdDev(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100));
             }
 
             var stoptime = DateTime.Now;
@@ -63,7 +63,7 @@ namespace PortfolioEngineLib.Tests
 
             for (int c = 0; c < runs; c++)
             {
-                res[c] = PortfolioEngine.Analytics.AnnualisedStdDev(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100, 1)).First();
+                res[c] = PortfolioEngine.Analytics.AnnualisedStdDev(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100));
             }
 
             Console.WriteLine("Mean and std dev of standard deviations are {0}, {1}", Statistics.Mean(res), Statistics.StandardDeviation(res));
@@ -84,11 +84,11 @@ namespace PortfolioEngineLib.Tests
 
             // Monthly data test
             var sdm = PortfolioEngine.Analytics.AnnualisedStdDev(datam1);
-            Assert.AreEqual(Statistics.StandardDeviation(returns1) * Math.Sqrt(12), sdm.First(), delta);
+            Assert.AreEqual(Statistics.StandardDeviation(returns1) * Math.Sqrt(12), sdm, delta);
 
             // Daily data test
             var sdd = PortfolioEngine.Analytics.AnnualisedStdDev(datad1);
-            Assert.AreEqual(Statistics.StandardDeviation(returns1) * Math.Sqrt(252), sdd.First(), delta);
+            Assert.AreEqual(Statistics.StandardDeviation(returns1) * Math.Sqrt(252), sdd, delta);
         }
     }
 }

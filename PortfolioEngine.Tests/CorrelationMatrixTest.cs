@@ -27,7 +27,7 @@ namespace PortfolioEngineLib.Tests
         [TestMethod]
         public void CheckParametersTest()
         {
-            var res = PortfolioEngine.Analytics.CorrelationMatrix(TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100, 10));
+            var res = PortfolioEngine.Analytics.CorrelationMatrix(TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100));
             // Check output type
             Assert.IsNotNull(res);
             Assert.IsInstanceOfType(res, typeof(double[,]));
@@ -53,7 +53,7 @@ namespace PortfolioEngineLib.Tests
 
             for (int c = 0; c < runs; c++)
             {
-                res.Add(PortfolioEngine.Analytics.CorrelationMatrix(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100, 10)));
+                res.Add(PortfolioEngine.Analytics.CorrelationMatrix(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100)));
             }
 
             var stoptime = DateTime.Now;

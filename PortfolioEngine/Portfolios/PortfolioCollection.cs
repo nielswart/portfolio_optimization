@@ -34,7 +34,7 @@ namespace PortfolioEngine.Portfolios
         /// 
         /// </summary>
         /// <param name="resultSetCollection"></param>
-        public void AddMetrics(Dictionary<int, ResultSet<double>> resultSetCollection)
+        public void AddMetrics(Dictionary<int, MetricsCollection<double>> resultSetCollection)
         {
             int c = 0;
             foreach (var r in resultSetCollection)

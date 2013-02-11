@@ -48,7 +48,6 @@ namespace DataSciLib.REngine.Rmetrics
         {
             Initialize();
 
-            var data = timeseries.DataMatrix;
             string[] charvec = new string[timeseries.DateTime.GetLength(0)];
             int i = 0;
             foreach (var d in timeseries.DateTime)
@@ -56,8 +55,8 @@ namespace DataSciLib.REngine.Rmetrics
                 charvec[i] = d.ToShortDateString().Replace('/', '-');
                 i++;
             }
-
-            return new timeSeries(Engine.CallFunction("timeSeries", Engine.RMatrix(data), Engine.RVector(charvec), Engine.RVector(timeseries.Names)));
+            var data = timeseries.Data.ToMatrix(0);
+            return new timeSeries(Engine.CallFunction("timeSeries", Engine.RMatrix(data), Engine.RVector(charvec), Engine.RString(timeseries.Name)));
         }
 
         /// <summary>

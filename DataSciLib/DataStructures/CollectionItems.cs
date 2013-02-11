@@ -60,7 +60,7 @@ namespace DataSciLib.DataStructures
     /// An atomic value that uniquely identifies an entry in a 1 dimensional time series object
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class TimeItem<Tval> : ArrayItem<DateTime, Tval>
+    public class TimeDataPoint<Tval> : ArrayItem<DateTime, Tval>
     {
         public DateTime Date
         {
@@ -71,7 +71,7 @@ namespace DataSciLib.DataStructures
             get { return _value; }
         }
 
-        public TimeItem(DateTime date, Tval value)
+        public TimeDataPoint(DateTime date, Tval value)
             : base(date, value)
         {
             _id = date;

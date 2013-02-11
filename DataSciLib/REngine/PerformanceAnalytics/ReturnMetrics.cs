@@ -2,8 +2,9 @@
 //
 using System;
 using System.Linq;
-using DataSciLib.REngine.Rmetrics;
+using DataSciLib.REngine;
 using RDotNet;
+using DataSciLib.REngine.Rmetrics;
 
 namespace DataSciLib.REngine.PerformanceAnalytics
 {

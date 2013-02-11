@@ -39,6 +39,8 @@ namespace PortfolioEngineLib.Tests
                     { 0.0038525447, 0.001269398, -0.0002083454 }, 
                     { 0.0012693982, 0.002107381,  0.001064057 }, 
                     { -0.0002083454, 0.0010640575, 0.0062396967} });
+
+            var mv = new MeanVariance();
         }
 
         [TestMethod]
@@ -50,13 +52,14 @@ namespace PortfolioEngineLib.Tests
             pset.AddConstraints(constr);
             pset.AddSpecifications(spec);
 
-            var res = optimizer.CalcEfficientFrontier(pset, mean, cov);
+            /*var res = optimizer.CalcEfficientFrontier(pset, mean, cov);
             var riskreturn = from p in res
                              select new List<string> { p.Metrics[Metrics.StdDev].ToString(), p.Metrics[Metrics.Mean].ToString() };
-
+            
             int c =0;
             Writer csv = new Writer("riskReturn.csv");
             csv.CSV(riskreturn);
+             * */
         }
         
         [TestMethod]
@@ -72,7 +75,7 @@ namespace PortfolioEngineLib.Tests
             for (int c = 0; c < runs; c++)
             {
                 PerformanceLogger.Start("EfficientFrontierTests", "EfficientFrontierPerformanceTest", "Optimization.CalcEfficientFrontier");
-                var res = optimizer.CalcEfficientFrontier(pset, mean, cov);
+                //var res = optimizer.CalcEfficientFrontier(pset, mean, cov);
                 PerformanceLogger.Stop("EfficientFrontierTests", "EfficientFrontierPerformanceTest", "Optimization.CalcEfficientFrontier");
             }
             PerformanceLogger.WriteToCSV("performancedata.csv");

@@ -6,9 +6,6 @@ using MathNet.Numerics.LinearAlgebra.Double;
 using DataSciLib.Optimization.QuadProg;
 using DataSciLib.DataStructures;
 using DataSciLib.REngine;
-using DataSciLib.REngine.Rmetrics;
-using DataSciLib.REngine.Rmetrics.Specification;
-using DataSciLib.REngine.Rmetrics.Constraints;
 
 namespace PortfolioEngine.Settings
 {

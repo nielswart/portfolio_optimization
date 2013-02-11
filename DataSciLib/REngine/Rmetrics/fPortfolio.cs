@@ -9,8 +9,6 @@ using System.Text;
 using RDotNet;
 using DataSciLib.REngine.Rmetrics;
 using DataSciLib.DataStructures;
-using DataSciLib.REngine.Rmetrics.Constraints;
-using DataSciLib.REngine.Rmetrics.Specification;
 
 namespace DataSciLib.REngine.Rmetrics
 {

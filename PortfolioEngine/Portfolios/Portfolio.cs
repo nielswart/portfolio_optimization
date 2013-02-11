@@ -25,7 +25,7 @@ namespace PortfolioEngine.Portfolios
             set; 
         }
 
-        public double[] Weights { get; set; }
+        public IEnumerable<ArrayItem<string, double>> Weights { get; set; }
 
         public Dictionary<VMetrics, double[]> VectorMetrics { get; set; }
 
@@ -33,7 +33,7 @@ namespace PortfolioEngine.Portfolios
 
         public Dictionary<MatrixMetrics, double[,]> MatrixMetrics { get; set; }
 
-        public string ID { get; protected set; }
+        public string Name { get; protected set; }
         #endregion
 
         public Portfolio()
@@ -41,7 +41,7 @@ namespace PortfolioEngine.Portfolios
             PriceSeries = new TimeSeries<double>();
             VectorMetrics = new Dictionary<VMetrics,double[]>();
             Metrics = new Dictionary<Metrics,double>();
-            ID = "Portfolio";
+            Name = "Portfolio";
         }
 
         public Portfolio(string id)
@@ -49,7 +49,7 @@ namespace PortfolioEngine.Portfolios
             PriceSeries = new TimeSeries<double>();
             VectorMetrics = new Dictionary<VMetrics, double[]>();
             Metrics = new Dictionary<Metrics, double>();
-            ID = id;
+            Name = id;
         }
 
 
@@ -60,10 +60,6 @@ namespace PortfolioEngine.Portfolios
         /// <returns></returns>
         public virtual IPortfolio Calculate(ITimeSeries<double> data)
         {
-            foreach (var n in this.PriceSeries.Names)
-            {
-                // Add instruments 
-            }
             throw new NotImplementedException();
         }        
     }

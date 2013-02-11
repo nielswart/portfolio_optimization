@@ -14,7 +14,7 @@ using MathNet.Numerics.Distributions;
 namespace PortfolioEngineLib.Tests
 {
     [TestClass]
-    public class AnnualizedReturnTest
+    public class PerformanceAnalytics
     {
         [TestInitialize]
         public void StartEngine()
@@ -24,16 +24,25 @@ namespace PortfolioEngineLib.Tests
         }
 
         [TestMethod]
-        public void CheckParametersTest()
+        public void AnnualisedReturnTest()
         {
-            var res = PortfolioEngine.Analytics.AnnualisedReturn(TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100, 1));
+            var res = PortfolioEngine.Analytics.AnnualisedReturn(TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100));
             // Check output type
             Assert.IsNotNull(res);
             Assert.IsInstanceOfType(res, typeof(double[]));
         }
 
         [TestMethod]
-        public void SimplePerformanceTest()
+        public void AnnualisedStdDevTest()
+        {
+            var res = PortfolioEngine.Analytics.AnnualisedStdDev(TimeSeriesFactory<double>.SampleData.Gaussian.Create(0, 0.2, 100));
+            // Check output type
+            Assert.IsNotNull(res);
+            Assert.IsInstanceOfType(res, typeof(double[]));
+        }
+
+        [TestMethod]
+        public void ExecutionPerformanceTest()
         {
             int runs = 100;
 
@@ -45,7 +54,7 @@ namespace PortfolioEngineLib.Tests
 
             for (int c = 0; c < runs; c++)
             {
-                res[c] = PortfolioEngine.Analytics.AnnualisedReturn(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100, 1)).First();
+                res[c] = PortfolioEngine.Analytics.AnnualisedReturn(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100));
             }
 
             var stoptime = DateTime.Now;
@@ -63,7 +72,7 @@ namespace PortfolioEngineLib.Tests
 
             for (int c = 0; c < runs; c++)
             {
-                res[c] = PortfolioEngine.Analytics.AnnualisedReturn(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100, 1)).First();
+                res[c] = PortfolioEngine.Analytics.AnnualisedReturn(TimeSeriesFactory<double>.SampleData.Gaussian.Create(mean, stddev, 100));
             }
 
             Console.WriteLine("Mean and std dev of standard deviations are {0}, {1}", Statistics.Mean(res), Statistics.StandardDeviation(res));
@@ -83,11 +92,11 @@ namespace PortfolioEngineLib.Tests
 
             // Monthly data
             var arm = PortfolioEngine.Analytics.AnnualisedReturn(datam1);
-            Assert.AreEqual(Statistics.Mean(returns1) * 12, arm.First(), delta);
+            Assert.AreEqual(Statistics.Mean(returns1) * 12, arm, delta);
 
             // Daily data
             var ard = PortfolioEngine.Analytics.AnnualisedReturn(datad1);
-            Assert.AreEqual(Statistics.Mean(returns1) * 252, ard.First(), delta);
+            Assert.AreEqual(Statistics.Mean(returns1) * 252, ard, delta);
         }
     }
 }

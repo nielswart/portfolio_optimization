@@ -5,9 +5,6 @@ using System.Text;
 using DataSciLib.Optimization.QuadProg;
 using DataSciLib.DataStructures;
 using DataSciLib.REngine;
-using DataSciLib.REngine.Rmetrics;
-using DataSciLib.REngine.Rmetrics.Specification;
-using DataSciLib.REngine.Rmetrics.Constraints;
 using DataSciLib.REngine.QuadProg;
 using DataSciLib.Statistics;
 using MathNet.Numerics.LinearAlgebra.Double;
@@ -20,7 +17,7 @@ namespace PortfolioEngine.Settings
         private PortfolioSettings _portfSet;
         private List<MeanVariance> _meanVar;
 
-        public Dictionary<int, ResultSet<double>> ResultsCollection { get; set; }
+        public Dictionary<int, MetricsCollection<double>> ResultsCollection { get; set; }
 
         /// <summary>
         /// 
@@ -32,10 +29,10 @@ namespace PortfolioEngine.Settings
             _portfSet = portfSet;
             _meanVar = meanvar;
 
-            ResultsCollection = new Dictionary<int, ResultSet<double>>();
+            ResultsCollection = new Dictionary<int, MetricsCollection<double>>();
             for (int i = 1; i < portfSet.Spec.NumberofFrontierPoints + 1; i++)
             {
-                ResultsCollection.Add(i, new ResultSet<double>(i));
+                ResultsCollection.Add(i, new MetricsCollection<double>(i));
             }
         }
         /// <summary>

@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Web
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioEngineLib", "POrtfolioEngine\PortfolioEngineLib.csproj", "{F7A4B10C-9DC2-459A-843D-F63CF7F5F911}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio.Engine", "POrtfolioEngine\Portfolio.Engine.csproj", "{F7A4B10C-9DC2-459A-843D-F63CF7F5F911}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio.DataTransferObjects", "Portfolio.DataTransferObject\Portfolio.DataTransferObjects.csproj", "{D14BDB69-D1D7-4F23-B175-E0F23BBBC809}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio.DataStructures", "Portfolio.DataTransferObject\Portfolio.DataStructures.csproj", "{D14BDB69-D1D7-4F23-B175-E0F23BBBC809}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioEngineLib.Tests", "PortfolioEngine.Tests\PortfolioEngineLib.Tests.csproj", "{B5BEE933-E827-475A-B1F2-587279A025AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio.Tests", "PortfolioEngine.Tests\Portfolio.Tests.csproj", "{B5BEE933-E827-475A-B1F2-587279A025AD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSciLib", "DataSciLib\DataSciLib.csproj", "{0E377E47-2DD9-40BB-AA4C-47EB38D6503D}"
 EndProject
@@ -16,33 +16,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSciLib.IO", "DataSciLib.IO\DataSciLib.IO.csproj", "{A06CE60D-DDA5-4F26-8CA3-7BF53CA589A2}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://nielswart.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Portfolio.DataTransferObject\\Portfolio.DataTransferObjects.csproj
-		SccProjectName1 = Portfolio.DataTransferObject
-		SccLocalPath1 = Portfolio.DataTransferObject
-		SccProjectUniqueName2 = PortfolioEngine.Tests\\PortfolioEngineLib.Tests.csproj
-		SccProjectName2 = PortfolioEngine.Tests
-		SccLocalPath2 = PortfolioEngine.Tests
-		SccProjectUniqueName3 = POrtfolioEngine\\PortfolioEngineLib.csproj
-		SccProjectName3 = POrtfolioEngine
-		SccLocalPath3 = POrtfolioEngine
-		SccProjectUniqueName4 = DataSciLib\\DataSciLib.csproj
-		SccProjectName4 = DataSciLib
-		SccLocalPath4 = DataSciLib
-		SccProjectUniqueName5 = DataSciLib.Tests\\DataSciLib.Tests.csproj
-		SccProjectName5 = DataSciLib.Tests
-		SccLocalPath5 = DataSciLib.Tests
-		SccProjectUniqueName6 = PerformanceLogger\\PerformanceTools.csproj
-		SccProjectName6 = PerformanceLogger
-		SccLocalPath6 = PerformanceLogger
-		SccProjectUniqueName7 = DataSciLib.IO\\DataSciLib.IO.csproj
-		SccProjectName7 = DataSciLib.IO
-		SccLocalPath7 = DataSciLib.IO
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
