@@ -40,17 +40,17 @@ namespace PortfolioEngineLib.Tests
                     { 0.0012693982, 0.002107381,  0.001064057 }, 
                     { -0.0002083454, 0.0010640575, 0.0062396967} });
 
-            var mv = new MeanVariance();
         }
 
         [TestMethod]
         public void CalculateEfficientFrontier()
         {
-            OptimizationConstraints constr = new OptimizationConstraints(ConstraintType.LongOnly);
-            PortfolioSpecification spec = new PortfolioSpecification(numpoints: 50, rfrate: 0);
-            PortfolioSettings pset = new PortfolioSettings(new List<string> { "DST", "GPL", "ASR" });
-            pset.AddConstraints(constr);
-            pset.AddSpecifications(spec);
+
+            //OptimizationConstraints constr = new OptimizationConstraints(ConstraintType.LongOnly);
+            //PortfolioSpecification spec = new PortfolioSpecification(numpoints: 50, rfrate: 0);
+            //PortfolioSettings pset = new PortfolioSettings(new List<string> { "DST", "GPL", "ASR" });
+            //pset.AddConstraints(constr);
+            //pset.AddSpecifications(spec);
 
             /*var res = optimizer.CalcEfficientFrontier(pset, mean, cov);
             var riskreturn = from p in res
@@ -65,11 +65,11 @@ namespace PortfolioEngineLib.Tests
         [TestMethod]
         public void EfficientFrontierPerformanceTest()
         {
-            OptimizationConstraints constr = new OptimizationConstraints(ConstraintType.LongOnly);
-            PortfolioSpecification spec = new PortfolioSpecification(numpoints: 50, rfrate: 0);
-            PortfolioSettings pset = new PortfolioSettings(new List<string> { "DST", "GPL", "ASR" });
-            pset.AddConstraints(constr);
-            pset.AddSpecifications(spec);
+            //OptimizationConstraints constr = new OptimizationConstraints(ConstraintType.LongOnly);
+            //PortfolioSpecification spec = new PortfolioSpecification(numpoints: 50, rfrate: 0);
+            //PortfolioSettings pset = new PortfolioSettings(new List<string> { "DST", "GPL", "ASR" });
+            //pset.AddConstraints(constr);
+            //pset.AddSpecifications(spec);
 
             int runs = 100;
             for (int c = 0; c < runs; c++)

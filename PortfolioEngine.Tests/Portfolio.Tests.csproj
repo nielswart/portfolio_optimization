@@ -57,13 +57,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnnualizedStdDevTest.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="PerformanceAnalyticsTests.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CalcPortfolioTests.cs" />
     <Compile Include="CalcEfficientFrontierTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
