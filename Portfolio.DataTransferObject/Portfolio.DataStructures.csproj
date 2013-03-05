@@ -48,14 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces.cs" />
-    <Compile Include="MeanVariance.cs" />
-    <Compile Include="MetricsEnum.cs" />
-    <Compile Include="PortfolioSettings.cs" />
+    <Compile Include="Instrument.cs" />
+    <Compile Include="LinearConstraint.cs" />
+    <Compile Include="Portfolio.cs" />
+    <Compile Include="PortfolioCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="OptimizationConstraints.cs" />
-    <Compile Include="PortfolioSpecification.cs" />
-    <Compile Include="FinanceEnums.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataSciLib\DataSciLib.csproj">
