@@ -69,7 +69,7 @@ namespace DataSciLib.DataStructures
             private set;
         }
 
-        public int IntegrationOrder
+        public uint IntegrationOrder
         {
             get;
             private set;
@@ -80,6 +80,8 @@ namespace DataSciLib.DataStructures
             get { return _timeDataDict.Count; }
         }
 
+        public DataFrequency Frequency { get; set; }
+
         #endregion
 
         #region Constructor
@@ -89,12 +91,17 @@ namespace DataSciLib.DataStructures
         public TimeSeries()
         {
             Name = "Series1";
-
+            IntegrationOrder = 1;
+            Frequency = DataFrequency.Daily;
             _timeDataDict = new SortedList<DateTime, T>();
         }
 
-        public TimeSeries(IEnumerable<TimeDataPoint<T>> datapoints, string name)
+
+        public TimeSeries(IEnumerable<TimeDataPoint<T>> datapoints, string name, uint integrationOrder, DataFrequency freq = DataFrequency.Daily)
         {
+            Name = "Series1";
+            IntegrationOrder = integrationOrder;
+            Frequency = freq;
             _timeDataDict = new SortedList<DateTime, T>();
 
             foreach (var d in datapoints)

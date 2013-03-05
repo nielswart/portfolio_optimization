@@ -13,7 +13,7 @@ namespace DataSciLib.DataStructures
     /// <typeparam name="T"></typeparam>
     public interface ITimeSeries<T> : IEnumerable<TimeDataPoint<T>> 
     {
-        int IntegrationOrder { get; }
+        uint IntegrationOrder { get; }
 
         T[] Data { get; }
 
@@ -27,5 +27,6 @@ namespace DataSciLib.DataStructures
 
         int RowCount { get; }
 
+        DataFrequency Frequency { get; }
     }
 }
