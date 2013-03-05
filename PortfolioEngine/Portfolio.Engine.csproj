@@ -84,14 +84,11 @@
   <ItemGroup>
     <Compile Include="Analytics.cs" />
     <Compile Include="BackTest.cs" />
-    <Compile Include="Settings\MVOFrontier.cs" />
-    <Compile Include="Settings\MVOMinVariance.cs" />
-    <Compile Include="Settings\PortfolioConfig.cs" />
-    <Compile Include="Settings\ResultSet.cs" />
-    <Compile Include="Portfolios\PortfolioCollection.cs" />
+    <Compile Include="Portfolios\MinRiskPortfolio.cs" />
+    <Compile Include="Algorithms\MVOFrontier.cs" />
+    <Compile Include="Algorithms\MVOMinVariance.cs" />
+    <Compile Include="Algorithms\ConfigurationManager.cs" />
     <Compile Include="Portfolios\EfficientFrontier.cs" />
-    <Compile Include="Portfolios\GeneralPortfolio.cs" />
-    <Compile Include="Portfolios\Portfolio.cs" />
     <Compile Include="Optimization.cs" />
     <Compile Include="Portfolios\PortfolioFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
