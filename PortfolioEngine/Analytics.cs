@@ -3,12 +3,13 @@
 
 using DataSciLib.DataStructures;
 using DataSciLib.REngine;
-using DataSciLib.REngine.Rmetrics;
 using DataSciLib.REngine.PerformanceAnalytics;
-using System;
-using System.Linq;
-using System.Collections.Generic;
+using DataSciLib.REngine.Rmetrics;
 using MathNet.Numerics.Statistics;
+using PortfolioEngine.Portfolios;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PortfolioEngine
 {
@@ -35,21 +36,15 @@ namespace PortfolioEngine
     /// </summary>
     public sealed class Analytics
     {
-        #region Static Constructor
+        #region Initialization
         /// <summary>
         /// R Engine Instance
         /// </summary>
         public static R Engine;
 
-        /// <summary>
-        /// Warning message that should be passed to the user
-        /// </summary>
         public static string WarningMessage { get; private set; }
 
-        /// <summary>
-        /// Constructor of Performance class - automatically initializes and starts the R Engine
-        /// </summary>
-        static Analytics()
+        private static void Initialize()
         {
             Engine = R.Instance;
             Engine.Start(REngineOptions.QuietMode);
@@ -59,11 +54,21 @@ namespace PortfolioEngine
 
         #endregion
 
+        /// <summary>
+        /// Calculate the annualised return of the portfolio returns
+        /// </summary>
+        /// <param name="timeseries"></param>
+        /// <returns></returns>
         public static double AnnualisedReturn(ITimeSeries<double> timeseries)
         {
             return timeseries.AnnualisedMean();
         }
 
+        /// <summary>
+        /// Calculate the anualised standard deviation of the portfolio returns
+        /// </summary>
+        /// <param name="timeseries"></param>
+        /// <returns></returns>
         public static double AnnualisedStdDev(ITimeSeries<double> timeseries)
         {
             return timeseries.AnnualisedStdDev();
@@ -107,20 +112,36 @@ namespace PortfolioEngine
             return CAPM.Beta(timeSeries.Create(asset), timeSeries.Create(benchmark), riskfree).First();
         }
 
-        /// <summary>
-        /// Calculate the annualized Sharpe Ratio of each return series in the ITimeSeries object
-        /// </summary>
-        /// <param name="portfolio">Portfolio or asset return time series</param>
-        /// <param name="riskfree">The risk-free rate with the same periodicity as the returns, passed as a fraction not percentage</param>
-        /// <returns>Array of Sharpe Ratios, one for every returns series</returns>
-        public static double SharpeRatio(ITimeSeries<double> portfolio, double riskfree = 0)
+        public static double MarginalReturn(IPortfolio portfolio)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static double MarginalRisk(IPortfolio portfolio)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static double ResidualRisk(ITimeSeries<double> asset, ITimeSeries<double> benchmark, double riskfree = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static double SharpeRatio(ITimeSeries<double> portfolio, double riskFreeRate = 0)
         {
             // Check parameters
-            if (riskfree >= 1 || riskfree < 0)
+            if (riskFreeRate >= 1 || riskFreeRate < 0)
                 throw new ArgumentException("The risk-free rate should be a value between 0 and 1");
-            
-            var res = (portfolio.AnnualisedMean() - riskfree) / portfolio.AnnualisedStdDev();
-            return res;
+
+            return (portfolio.AnnualisedMean() - riskFreeRate) / portfolio.AnnualisedStdDev();
+        }
+
+        public static double SharpeRatio(IPortfolio portfolio, double riskFreeRate = 0)
+        {
+            if (riskFreeRate >= 1 || riskFreeRate < 0)
+                throw new ArgumentException("The risk-free rate should be a value between 0 and 1");
+
+            return (portfolio.Mean - riskFreeRate) / Math.Sqrt(portfolio.Covariance[portfolio.Name]);
         }
 
         public static double ActivePremium(ITimeSeries<double> portfolio, ITimeSeries<double> benchmark)
