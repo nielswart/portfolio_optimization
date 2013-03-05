@@ -54,25 +54,10 @@ namespace PortfolioEngine
             WarningMessage = "No warnings";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="portfset"></param>
-        /// <param name="meanVar"></param>
-        /// <returns></returns>
-        public IPortfolioCollection CalcEfficientFrontier(PortfolioSettings portfset, List<MeanVariance> meanVar)
+        public IPortfolioCollection CalcEfficientFrontier(IPortfolio portfolio, double riskFreeRate, uint numberOfPortfolios)
         {
-            return EfficientFrontier.CalculateMVFrontier(portfset, meanVar);
-        }
-        
-        public IPortfolio CalcPortfolio(PortfolioSettings portfset, ITimeSeries<double> data)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IPortfolio CalcPortfolio(IEnumerable<Tuple<ITimeSeries<double>, double>> portfolioWeights)
-        {
-            return PortfolioFactory.Create(portfolioWeights);
+            PortfolioCollection frontier = new PortfolioCollection("Efficient Frontier", riskFreeRate);
+            return frontier.CalculateMVFrontier(portfolio, numberOfPortfolios);
         }
     }
 }
