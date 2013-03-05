@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PortfolioEngine</RootNamespace>
-    <AssemblyName>PortfolioEngine.DTO</AssemblyName>
+    <AssemblyName>Portfolio.DataStructures</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>%24/portfolioengine/PortfolioEngineLib/Portfolio.DataTransferObject</SccProjectName>
