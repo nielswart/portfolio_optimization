@@ -39,11 +39,6 @@ namespace REngine.Tests
         }
 
         [TestMethod]
-        public void CanAdd()
-        {
-            Assert.AreEqual(4, 2 + 2);
-        }
-        [TestMethod]
         public void LoadDllTest()
         {
             var R_HOME = System.Environment.GetEnvironmentVariable("R_HOME");
