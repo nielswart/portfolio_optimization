@@ -57,11 +57,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivePremiumTest.cs" />
+    <Compile Include="AnnualisedReturnTest.cs" />
+    <Compile Include="AnnualisedStdDevTest.cs" />
+    <Compile Include="CAPModelTest.cs" />
+    <Compile Include="InformationRatioTest.cs" />
+    <Compile Include="MarginalReturnsTest.cs" />
+    <Compile Include="MarginalRiskTest.cs" />
     <Compile Include="PerformanceAnalyticsTests.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CalcEfficientFrontierTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RealisedAlphaTest.cs" />
+    <Compile Include="RealisedBetaTest.cs" />
+    <Compile Include="ResidualRiskTest.cs" />
+    <Compile Include="SharpeRatioTests.cs" />
+    <Compile Include="SortinoRatioTest.cs" />
+    <Compile Include="TrackingErrorTest.cs" />
+    <Compile Include="VaRTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="returns_20121012.csv">

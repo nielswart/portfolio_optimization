@@ -19,7 +19,6 @@ namespace PortfolioEngineLib.Tests
     public class EfficientFrontierTests
     {
         Optimization optimizer;
-        R Engine;
         SortedList<string, double> mean;
         CovarianceMatrix cov;
 
