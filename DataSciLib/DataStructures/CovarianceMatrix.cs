@@ -9,8 +9,6 @@ namespace DataSciLib.DataStructures
 {
     public class CovarianceMatrix : DenseMatrix
     {
-        private SortedSet<string> _names;
-
         public CovarianceMatrix(double[,] matrix)
             : base(matrix)
         {
@@ -36,9 +34,24 @@ namespace DataSciLib.DataStructures
                 throw new FileNotFoundException();
         }
 
-        public static CovarianceMatrix Create(IEnumerable<IEnumerable<ArrayItem<string, double>>> varCov)
+        public static CovarianceMatrix Create(Dictionary<string, Dictionary<string, double>> varCov)
         {
-            throw new NotImplementedException();
+            int numvars = varCov.Keys.Count;
+            double[,] matrix = new double[numvars, numvars];
+
+            int r=0,c =0;
+            foreach (var key in varCov.Keys)
+            {
+                foreach (var k in varCov[key].Keys)
+                {
+                    matrix[r, c] = varCov[key][k];
+                    r++;
+                }
+                c++;
+                r = 0;
+            }
+
+            return new CovarianceMatrix(matrix);
         }
 
         /// <summary>
