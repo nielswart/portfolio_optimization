@@ -820,7 +820,6 @@ namespace DataSciLib.REngine
             try
             {
                 engine.Evaluate("rm(list=ls())");
-                engine.ForceGarbageCollection();
             }
             catch (SEHException e)
             {
