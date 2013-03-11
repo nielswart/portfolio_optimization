@@ -25,28 +25,45 @@ namespace PortfolioEngine.Tests
         ITimeSeries<double> dailySampleTS = TimeSeriesFactory<double>.SampleData.Gaussian(mu, sigma, numperiods: elements, freq: DataFrequency.Daily);
 
         [TestMethod]
-        public void NormalOperation()
+        public void ResultDailyData()
         {
-            var res = PortfolioEngine.Analytics.AnnualisedStdDev(TimeSeriesFactory<double>.SampleData.Gaussian(0, 0.2, 100));
-            // Check output type
-            Assert.IsNotNull(res);
+            // Data
+            int elements = 100;
+            TimeSeriesFactory<double>.SampleData.RandomSeed = seed;
 
-            double delta = 0.001;
+            // Monthly data test
+            var sdm = Analytics.AnnualisedStdDev(monthlySampleTS);
+            Assert.IsNotNull(sdm);
+            Assert.AreEqual(sigma * Math.Sqrt(12), sdm, sigma);
+        }
 
+        [TestMethod]
+        public void ResultMonthlyData()
+        {
             // Data
             int elements = 100;
             TimeSeriesFactory<double>.SampleData.RandomSeed = 5;
 
             // Monthly data test
             var returns1 = Normal.Samples(new Random(5), 0.01, 0.02).Take(elements);
-            var sdm = PortfolioEngine.Analytics.AnnualisedStdDev(monthlySampleTS);
-            Assert.AreEqual(Statistics.StandardDeviation(returns1) * Math.Sqrt(12), sdm, delta);
-
-            // Daily data test
-            var sdd = PortfolioEngine.Analytics.AnnualisedStdDev(dailySampleTS);
-            var returns2 = Normal.Samples(new Random(5), 0.01, 0.02).Take(elements);
-            Assert.AreEqual(Statistics.StandardDeviation(returns2) * Math.Sqrt(252), sdd, delta);
+            var sdm = Analytics.AnnualisedStdDev(monthlySampleTS);
+            Assert.IsNotNull(sdm);
+            Assert.AreEqual(Statistics.StandardDeviation(returns1) * Math.Sqrt(12), sdm, 0.001);
         }
 
+        [TestMethod]
+        public void ZeroChangeData()
+        {
+            var ts = TimeSeriesFactory<double>.Create(Enumerable.Repeat(10.0, 100), 1, DataFrequency.Daily);
+            var sd = Analytics.AnnualisedStdDev(ts);
+
+            Assert.AreEqual(0, sd);
+        }
+
+        [TestMethod]
+        public void IntegratedData()
+        {
+
+        }
     }
 }

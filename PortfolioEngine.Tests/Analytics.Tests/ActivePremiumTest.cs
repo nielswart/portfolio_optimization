@@ -16,5 +16,15 @@ namespace PortfolioEngine.Tests
     [TestClass]
     public class ActivePremiumTest
     {
+        /// <summary>
+        /// Test the return value
+        /// </summary>
+        [TestMethod]
+        public void Result()
+        {
+
+        }
+
+
     }
 }

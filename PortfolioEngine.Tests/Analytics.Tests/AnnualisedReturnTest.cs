@@ -25,29 +25,31 @@ namespace PortfolioEngine.Tests
         ITimeSeries<double> dailySampleTS = TimeSeriesFactory<double>.SampleData.Gaussian(mu, sigma, numperiods: elements, freq: DataFrequency.Daily);
 
         [TestMethod]
-        public void NormalOperation()
+        public void ResultDailyData()
         {
-            var res = PortfolioEngine.Analytics.AnnualisedReturn(monthlySampleTS);
+            // Random Sample settings
+            int elements = 100;
+            TimeSeriesFactory<double>.SampleData.RandomSeed = 5;
 
-            // Check output
-            Assert.IsNotNull(res);
+            // Daily data
+            var ard = PortfolioEngine.Analytics.AnnualisedReturn(dailySampleTS);
+            Assert.IsNotNull(ard);
+            var returns = Normal.Samples(new Random(5), 0.01, 0.02).Take(elements);
+            Assert.AreEqual(Statistics.Mean(returns) * 252, ard, 0.001);
+        }
 
-            // Check results
-            double delta = 0.001;
-
+        [TestMethod]
+        public void ResultMonthlyData()
+        {
             // Random Sample settings
             int elements = 100;
             TimeSeriesFactory<double>.SampleData.RandomSeed = 5;
 
             // Monthly Data
             var arm = PortfolioEngine.Analytics.AnnualisedReturn(monthlySampleTS);
-            var returns1 = Normal.Samples(new Random(5), 0.01, 0.02).Take(elements);
-            Assert.AreEqual(Statistics.Mean(returns1) * 12, arm, delta);
-
-            // Daily data
-            var ard = PortfolioEngine.Analytics.AnnualisedReturn(dailySampleTS);
-            var returns2 = Normal.Samples(new Random(5), 0.01, 0.02).Take(elements);
-            Assert.AreEqual(Statistics.Mean(returns2) * 252, ard, delta);
+            Assert.IsNotNull(arm);
+            var returns = Normal.Samples(new Random(5), 0.01, 0.02).Take(elements);
+            Assert.AreEqual(Statistics.Mean(returns) * 12, arm, 0.001);
         }
     }
 }

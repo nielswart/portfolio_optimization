@@ -25,7 +25,7 @@ namespace PortfolioEngine.Tests
         ITimeSeries<double> dailySampleTS = TimeSeriesFactory<double>.SampleData.Gaussian(mu, sigma, numperiods: elements, freq: DataFrequency.Daily);
 
         [TestMethod]
-        public void NormalOperation()
+        public void Result()
         {
             // General case
             double rf = 0.04;
