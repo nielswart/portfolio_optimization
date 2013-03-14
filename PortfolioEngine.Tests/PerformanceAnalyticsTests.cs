@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PortfolioEngineLib.Tests
+namespace PortfolioEngine.Tests
 {
     [TestClass]
     public class PerformanceAnalytics

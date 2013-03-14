@@ -43,6 +43,13 @@ namespace PortfolioEngineLib.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void LargeRiskfreeRate()
+        {
+            var res = Analytics.RealisedAlpha(asset, benchmark, 1.05);
+        }
+
+        [TestMethod]
         public void ResultDailyData()
         {
             var riskfree = 0.05;

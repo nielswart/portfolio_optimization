@@ -13,7 +13,7 @@ using MathNet.Numerics.Distributions;
 using PerformanceTools;
 using DataSciLib.IO;
 
-namespace PortfolioEngineLib.Tests
+namespace PortfolioEngine.Tests
 {
     [TestClass]
     public class EfficientFrontierTests
