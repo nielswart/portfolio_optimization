@@ -7,6 +7,8 @@ using DataSciLib.REngine;
 using DataSciLib.REngine.PerformanceAnalytics;
 using DataSciLib.REngine.Rmetrics;
 using MathNet.Numerics.Statistics;
+using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Double;
 using PortfolioEngine.Portfolios;
 using System;
 using System.Collections.Generic;
@@ -26,6 +28,18 @@ namespace PortfolioEngine
         {
             this.Alpha = alpha;
             this.Beta = beta;
+        }
+    }
+
+    public struct NamedValue
+    {
+        public readonly string Name;
+        public readonly double Value;
+
+        public NamedValue(string name, double value)
+        {
+            this.Name = name;
+            this.Value = value;
         }
     }
 
@@ -59,7 +73,7 @@ namespace PortfolioEngine
         /// <returns>Annualised return in the same units as the <paramref name="timeseries"/> parameter </returns>
         public static double AnnualisedReturn(ITimeSeries<double> timeseries)
         {
-            return timeseries.AnnualisedMean();
+            return Math.Round(timeseries.AnnualisedMean(),3);
         }
 
         /// <summary>
@@ -69,7 +83,7 @@ namespace PortfolioEngine
         /// <returns>Annualised return in the same units as the <paramref name="timeseries"/> parameter</returns>
         public static double AnnualisedStdDev(ITimeSeries<double> timeseries)
         {
-            return timeseries.AnnualisedStdDev();
+            return Math.Round(timeseries.AnnualisedStdDev(), 3);
         }
 
         /// <summary>
@@ -81,11 +95,11 @@ namespace PortfolioEngine
         /// <returns>Tuple with the following elements - alpha, beta and residual vector of the same size as the asset and benchmark time series</returns>
         public static CAPMCoefficients CAPModel(ITimeSeries<double> asset, ITimeSeries<double> benchmark, double riskfree = 0)
         {
-            var Ra = asset.ToTimeSeries() - riskfree;
-            var Rb = benchmark.ToTimeSeries() - riskfree;
+            var Ra = asset.AsTimeSeries() - riskfree;
+            var Rb = benchmark.AsTimeSeries() - riskfree;
             
             var capm = Model.LinearRegression(Ra.Data, Rb.Data);
-            return new CAPMCoefficients(capm.Intercept, capm.Coefficients.First());
+            return new CAPMCoefficients(Math.Round(capm.Intercept,3), Math.Round(capm.Coefficients.First(), 3));
         }
 
         /// <summary>
@@ -105,8 +119,7 @@ namespace PortfolioEngine
             if (asset.RowCount != benchmark.RowCount)
                 throw new ArgumentException("TimeSeries should be of the same length");
 
-            return CAPModel(asset, benchmark, riskfree).Alpha;
-            //return CAPM.Beta(timeSeries.Create(asset), timeSeries.Create(benchmark), riskfree).First();
+            return Math.Round(CAPModel(asset, benchmark, riskfree).Alpha, 3);
         }
 
         /// <summary>
@@ -122,29 +135,19 @@ namespace PortfolioEngine
             if (riskfree >= 1 || riskfree < 0)
                 throw new ArgumentException("The risk-free rate should be a value between 0 and 1");
 
+            // Find a better way of comparing two series for equivalence - time and length (maybe extract part of benchmark that is comparable to asset ??
             if (asset.RowCount != benchmark.RowCount)
                 throw new ArgumentException("Time series should be of the same length");
 
-            return CAPModel(asset, benchmark, riskfree).Beta;
-            //return CAPM.Beta(timeSeries.Create(asset), timeSeries.Create(benchmark), riskfree).First();
-        }
-
-        public static double MarginalReturn(IPortfolio portfolio)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static double MarginalRisk(IPortfolio portfolio)
-        {
-            throw new NotImplementedException();
+            return Math.Round(CAPModel(asset, benchmark, riskfree).Beta, 3);
         }
 
         public static double ResidualRisk(ITimeSeries<double> asset, ITimeSeries<double> benchmark, double riskfree = 0)
         {
-            var Ra = asset.ToTimeSeries() - riskfree;
-            var Rb = benchmark.ToTimeSeries() - riskfree;
+            var Ra = asset.AsTimeSeries() - riskfree;
+            var Rb = benchmark.AsTimeSeries() - riskfree;
 
-            return Statistics.StandardDeviation(Model.LinearRegression(Ra.Data, Rb.Data).Residuals);
+            return Math.Round(Statistics.StandardDeviation(Model.LinearRegression(Ra.Data, Rb.Data).Residuals), 3);
         }
 
         public static double SharpeRatio(ITimeSeries<double> portfolio, double riskFreeRate = 0)
@@ -153,7 +156,7 @@ namespace PortfolioEngine
             if (riskFreeRate >= 1 || riskFreeRate < 0)
                 throw new ArgumentException("The risk-free rate should be a value between 0 and 1");
 
-            return (portfolio.AnnualisedMean() - riskFreeRate) / portfolio.AnnualisedStdDev();
+            return Math.Round((portfolio.AnnualisedMean() - riskFreeRate) / portfolio.AnnualisedStdDev(), 3);
         }
 
         public static double SharpeRatio(IPortfolio portfolio, double riskFreeRate = 0)
@@ -161,36 +164,34 @@ namespace PortfolioEngine
             if (riskFreeRate >= 1 || riskFreeRate < 0)
                 throw new ArgumentException("The risk-free rate should be a value between 0 and 1");
 
-            return (portfolio.Mean - riskFreeRate) / Math.Sqrt(portfolio.Covariance[portfolio.Name]);
+            return Math.Round((portfolio.Mean - riskFreeRate) / Math.Sqrt(portfolio.Covariance[portfolio.Name]), 3);
         }
 
         public static double ActivePremium(ITimeSeries<double> portfolio, ITimeSeries<double> benchmark)
         {
-            var ap = portfolio.AnnualisedMean() - benchmark.AnnualisedMean();
-            return ap;
+            return Math.Round(portfolio.AnnualisedMean() - benchmark.AnnualisedMean(), 3);
         }
 
-        public static double TrackingError(TimeSeries portfolio, TimeSeries benchmark)
+        public static double TrackingError(ITimeSeries<double> portfolio, ITimeSeries<double> benchmark)
         {
-            var te = (portfolio - benchmark).AnnualisedStdDev();
-            return te;
+            return Math.Round((portfolio.AsTimeSeries() - benchmark.AsTimeSeries()).AnnualisedStdDev(), 3);
         }
 
-        public static double InformationRatio(TimeSeries portfolio, TimeSeries benchmark)
+        public static double InformationRatio(ITimeSeries<double> portfolio, ITimeSeries<double> benchmark)
         {
             if (portfolio.RowCount != benchmark.RowCount)
                 throw new ArgumentException("TimeSeries should be of the same length");
 
-            return Analytics.ActivePremium(portfolio, benchmark) / Analytics.TrackingError(portfolio, benchmark);
+            return Math.Round(Analytics.ActivePremium(portfolio, benchmark) / Analytics.TrackingError(portfolio, benchmark), 3);
         }
 
-        public static double VaR(ITimeSeries<double>portfolio, double percentile = 0.95, VaRMethod vartype = PortfolioEngine.VaRMethod.CornishFisher)
+        public static double VaR(ITimeSeries<double> portfolio, double percentile = 0.95, VaRMethod vartype = PortfolioEngine.VaRMethod.CornishFisher)
         {
             if (percentile > 1)
                 percentile = percentile / 100;
             if (percentile <= 0 || percentile > 1)
                 throw new ArgumentException("Percentile value should be between 0 and 1 or 0 and 100");
-            
+
             switch (vartype)
             {
                 case PortfolioEngine.VaRMethod.Gaussian:
@@ -212,14 +213,34 @@ namespace PortfolioEngine
             if (portfolio.RowCount != targetReturn.RowCount)
                 throw new ArgumentException("TimeSeries should be of the same length");
 
-            try
-            {
-                return PerformanceRatios.SortinoRatio(timeSeries.Create(portfolio), timeSeries.Create(targetReturn)).First();
-            }
-            catch (REngineException e)
-            {
-                throw new ApplicationException(e.Message);
-            }
+            return PerformanceRatios.SortinoRatio(timeSeries.Create(portfolio), timeSeries.Create(targetReturn)).First();
+        }
+
+        public static IEnumerable<NamedValue> MarginalReturn(IPortfolio portfolio)
+        {
+            var marr = from p in portfolio
+                       select new NamedValue(p.Name, p.Weight / portfolio.Mean);
+
+            return marr;
+        }
+
+        public static IEnumerable<NamedValue> MarginalRisk(IPortfolio portfolio)
+        {
+            // Marginal contribution to risk --> d/dw (sigma) = (cov*w)/sigma
+
+            var marr = from ins in portfolio
+                       select new Tuple<string, Dictionary<string, double>>(ins.Name, ins.Covariance);
+
+            var cov = CovarianceMatrix.Create(marr.ToDictionary<Tuple<string, Dictionary<string, double>>, string, Dictionary<string, double>>(x => x.Item1, 
+                y => y.Item2));
+
+            var weights = new DenseVector((from ins in portfolio
+                                           select ins.Weight).ToArray());
+
+            var sigma = Math.Sqrt(weights.ToRowMatrix().Multiply(cov).Multiply(weights).First());
+            var mcr = cov.Multiply(weights).Divide(sigma);
+
+            return null;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace PortfolioEngine.Portfolios
 {
     public static class EfficientFrontier
     {
-        public static IPortfolioCollection CalculateMVFrontier(this IPortfolioCollection portfCol,  IPortfolio samplePortf, uint numPortfolios)
+        public static IPortfolioCollection CalculateMVFrontier(this IPortfolioCollection portfCol, IPortfolio samplePortf, uint numPortfolios)
         {
             //PerformanceLogger.Start("EfficientFrontier", "CalculateMVFrontier", "MVOFrontier.Calculate");
             var mvfrontier = new MVOFrontier(samplePortf, numPortfolios);
