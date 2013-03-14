@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DataSciLib.REngine
 {
+    [Serializable]
     public class REngineException : Exception
     {
         public new string Message { get; private set; }

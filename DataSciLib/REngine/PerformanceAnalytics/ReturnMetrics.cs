@@ -25,10 +25,10 @@ namespace DataSciLib.REngine.PerformanceAnalytics
             }
         }
 
-        public static double[] ActivePremium(timeSeries portfolio, timeSeries benchmark)
+        public static double[] ActivePremium(timeSeries portfolio, timeSeries benchmark, int scale = 252)
         {
             Initialize();
-            var expr = Engine.CallFunction("ActivePremium", portfolio.Expression, benchmark.Expression);
+            var expr = Engine.CallFunction("ActivePremium", portfolio.Expression, benchmark.Expression, Engine.RNumeric(scale));
             return expr.AsNumeric().ToArray();
         }
 

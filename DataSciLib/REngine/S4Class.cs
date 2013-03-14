@@ -17,11 +17,5 @@ namespace DataSciLib.REngine
                 expression.Protect();
             this.Expression = expression;
         }
-
-        ~S4Class()
-        {
-            //if (Expression.IsProtected)
-            //    Expression.Unprotect();
-        }
     }
 }

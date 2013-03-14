@@ -44,35 +44,37 @@ namespace DataSciLib.DataStructures
         }
     }
 
-    public class ArrayItem<Tid, Tval>
-    {
-        protected Tid _id;
-        protected Tval _value;
+    //public class ArrayItem<Tid, Tval>
+    //{
+    //    protected Tid _id;
+    //    protected Tval _value;
 
-        public ArrayItem(Tid id, Tval value)
-        {
-            _id = id;
-            _value = value;
-        }
-    }
+    //    public ArrayItem(Tid id, Tval value)
+    //    {
+    //        _id = id;
+    //        _value = value;
+    //    }
+    //}
 
     /// <summary>
     /// An atomic value that uniquely identifies an entry in a 1 dimensional time series object
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class TimeDataPoint<Tval> : ArrayItem<DateTime, Tval>
+    public struct TSDataPoint<Tval> 
     {
+        DateTime _id;
+        Tval _value;
+
         public DateTime Date
         {
-            get { return _id; }
+            get { return this._id; }
         }
         public Tval Value
         {
             get { return _value; }
         }
 
-        public TimeDataPoint(DateTime date, Tval value)
-            : base(date, value)
+        public TSDataPoint(DateTime date, Tval value)
         {
             _id = date;
             _value = value;
