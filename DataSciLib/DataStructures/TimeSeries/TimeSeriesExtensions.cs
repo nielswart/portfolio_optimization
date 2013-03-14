@@ -10,26 +10,6 @@ namespace DataSciLib.DataStructures
 {
     public static class TimeSeriesExtensions
     {
-        public static ITimeSeries<T> Window<T>(this ITimeSeries<T> timeseries, DateTime startdate, DateTime enddate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static ITimeSeries<T> SlidingWindow<T>(this ITimeSeries<T> timeseries, DateTime startdate, DateTime enddate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static ITimeSeries<T> ToMonthly<T>(this ITimeSeries<T> timeseries)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static ITimeSeries<T> ToQuarterly<T>(this ITimeSeries<T> timeseries)
-        {
-            throw new NotImplementedException();
-        }
-
         public static int PeriodsInYear<T>(this ITimeSeries<T> timeseries)
         {
             switch (timeseries.Frequency)
@@ -60,27 +40,47 @@ namespace DataSciLib.DataStructures
                         else
                             return 1;
                     }
-            }            
+            }
         }
 
         public static double AnnualisedMean(this ITimeSeries<double> timeseries)
         {
-            if (timeseries.IntegrationOrder == 0)
-            {
-                return Stats.Statistics.Mean(timeseries.Data) * timeseries.PeriodsInYear();
-            }
-            else
-                return Stats.Statistics.Mean(timeseries.FirstDifference().Data) * timeseries.PeriodsInYear();
+            return Stats.Statistics.Mean(timeseries.Data) * timeseries.PeriodsInYear();
         }
 
         public static double AnnualisedStdDev(this ITimeSeries<double> timeseries)
         {
-            if (timeseries.IntegrationOrder == 0)
-            {
-                return Stats.Statistics.StandardDeviation(timeseries.Data) * Math.Sqrt(timeseries.PeriodsInYear());
-            }
-            else
-                return Stats.Statistics.StandardDeviation(timeseries.FirstDifference().Data) * Math.Sqrt(timeseries.PeriodsInYear());
+            return Stats.Statistics.StandardDeviation(timeseries.Data) * Math.Sqrt(timeseries.PeriodsInYear());
+        }
+
+        public static ITimeSeries<T> Window<T>(this ITimeSeries<T> timeseries, DateTime startdate, DateTime enddate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static ITimeSeries<T> SlidingWindow<T>(this ITimeSeries<T> timeseries, DateTime startdate, DateTime enddate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static ITimeSeries<T> ToMonthly<T>(this ITimeSeries<T> timeseries)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static ITimeSeries<T> ToQuarterly<T>(this ITimeSeries<T> timeseries)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static ITimeSeries<T> Cumulate<T>(this ITimeSeries<double> timeseries, double baseVal = 100)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static ITimeSeries<T> AddRows<T>(this ITimeSeries<T> timeseries, ITimeSeries<T> newtimeseries)
+        {
+            throw new NotImplementedException();
         }
 
         public static ITimeSeries<double> FirstDifference(this ITimeSeries<double> timeseries, ReturnMethod method = ReturnMethod.Geometric)
@@ -88,14 +88,14 @@ namespace DataSciLib.DataStructures
             if (method == ReturnMethod.Arithmetic)
             {
                 var res = from cur in timeseries.Skip(1)
-                          select new TimeDataPoint<double>(cur.Date, cur.Value / timeseries[(from prev in timeseries where prev.Date < cur.Date select prev.Date).Max()] -1);
+                          select new TSDataPoint<double>(cur.Date, cur.Value / timeseries[(from prev in timeseries where prev.Date < cur.Date select prev.Date).Max()] -1);
 
                 return TimeSeriesFactory<double>.Create(res, timeseries.Name, timeseries.IntegrationOrder -1, timeseries.Frequency);
             }
             else
             {
                 var res = from cur in timeseries.Skip(1)
-                          select new TimeDataPoint<double>(cur.Date, Math.Log(cur.Value / timeseries[(from prev in timeseries where prev.Date < cur.Date select prev.Date).Max()]));
+                          select new TSDataPoint<double>(cur.Date, Math.Log(cur.Value / timeseries[(from prev in timeseries where prev.Date < cur.Date select prev.Date).Max()]));
 
                 return TimeSeriesFactory<double>.Create(res, timeseries.Name, timeseries.IntegrationOrder - 1, timeseries.Frequency);
             }
@@ -106,17 +106,7 @@ namespace DataSciLib.DataStructures
             throw new NotImplementedException();
         }
 
-        public static ITimeSeries<T> Cumulate<T>(this ITimeSeries<double> timeseries, double baseVal = 100)
-        {
-            throw new NotImplementedException();
-        }
-
         public static IMultiTimeSeries<T> AddColumns<T>(this ITimeSeries<T> timeseries, ITimeSeries<T> newtimeseries)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static ITimeSeries<T> AddRows<T>(this ITimeSeries<T> timeseries, ITimeSeries<T> newtimeseries)
         {
             throw new NotImplementedException();
         }
@@ -134,6 +124,11 @@ namespace DataSciLib.DataStructures
         public static T Last<T>(this ITimeSeries<T> timeseries)
         {
             throw new NotImplementedException();
+        }
+
+        public static TimeSeries AsTimeSeries(this ITimeSeries<double> timeseries)
+        {
+            return new TimeSeries(timeseries.AsEnumerable(), timeseries.Name, timeseries.IntegrationOrder, timeseries.Frequency);
         }
 
     }

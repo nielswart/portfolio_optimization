@@ -97,7 +97,7 @@ namespace DataSciLib.DataStructures
         }
 
 
-        public TimeSeries(IEnumerable<TimeDataPoint<T>> datapoints, string name, uint integrationOrder, DataFrequency freq = DataFrequency.Daily)
+        public TimeSeries(IEnumerable<TSDataPoint<T>> datapoints, string name, uint integrationOrder, DataFrequency freq = DataFrequency.Daily)
         {
             Name = "Series1";
             IntegrationOrder = integrationOrder;
@@ -122,11 +122,11 @@ namespace DataSciLib.DataStructures
             throw new NotImplementedException();
         }
 
-        public IEnumerator<TimeDataPoint<T>> GetEnumerator()
+        public IEnumerator<TSDataPoint<T>> GetEnumerator()
         {
             foreach (var td in _timeDataDict)
             {
-                yield return new TimeDataPoint<T>(td.Key, td.Value);
+                yield return new TSDataPoint<T>(td.Key, td.Value);
             }
         }
 
@@ -149,71 +149,72 @@ namespace DataSciLib.DataStructures
     }
 
     /// <summary>
-    /// Non-generic implementation of TimeSeries of type double
+    /// Non-generic implementation of TimeSeries
     /// </summary>
     public sealed class TimeSeries : TimeSeries<double>
     {
-        public TimeSeries(IEnumerable<TimeDataPoint<double>> datapoints, string name)
+        // TODO: do it all with LINQ - lazy evaluation 
+        public TimeSeries(IEnumerable<TSDataPoint<double>> datapoints, string name, uint integrationOrder)
+            : base(datapoints, name, integrationOrder)
         {
-            _timeDataDict = new SortedList<DateTime, double>();
+           
+        }
 
-            foreach (var d in datapoints)
-            {
-                _timeDataDict.Add(d.Date, d.Value);
-            }
+        public TimeSeries(IEnumerable<TSDataPoint<double>> datapoints, string name, uint integrationOrder, DataFrequency freq)
+            : base(datapoints, name, integrationOrder, freq)
+        {
+            
         }
 
         // Operator overloads
         public static TimeSeries operator +(TimeSeries ts1, TimeSeries ts2)
         {
-            //add corresponding elements that match on time
-            List<TimeDataPoint<double>> newts = new List<TimeDataPoint<double>>();
-            foreach (var td in ts1)
-            {
-                var sum = td.Value + ts2[td.Date];
-                newts.Add(new TimeDataPoint<double>(td.Date, sum));
-            }
+            var addts = from a in ts1
+                        select new TSDataPoint<double>(a.Date, a.Value + ts2[a.Date]);
 
-            return new TimeSeries(newts, "Sum of " + ts1.Name + " and " + ts2.Name);
+            return new TimeSeries(addts, "Sum of " + ts1.Name + " and " + ts2.Name, ts1.IntegrationOrder);
+        }
+
+        public static TimeSeries operator +(TimeSeries timeseries, double scalar)
+        {
+            var newts = from td in timeseries
+                        select new TSDataPoint<double>(td.Date, td.Value + scalar);
+
+            return new TimeSeries(newts, timeseries.Name, timeseries.IntegrationOrder);
         }
 
         public static TimeSeries operator -(TimeSeries ts1, TimeSeries ts2)
         {
-            //add corresponding elements that match on time
-            List<TimeDataPoint<double>> newts = new List<TimeDataPoint<double>>();
-            foreach (var td in ts1)
-            {
-                var answ = td.Value - ts2[td.Date];
-                newts.Add(new TimeDataPoint<double>(td.Date, answ));
-            }
+            var mints = from a in ts1
+                        select new TSDataPoint<double>(a.Date, a.Value - ts2[a.Date]);
 
-            return new TimeSeries(newts, "Difference between " + ts1.Name + " and " + ts2.Name);
+            return new TimeSeries(mints, "Difference between " + ts1.Name + " and " + ts2.Name, ts1.IntegrationOrder);
         }
 
-        public static TimeSeries operator *(TimeSeries ts1, double multiplier)
+        public static TimeSeries operator -(TimeSeries timeseries, double scalar)
         {
-            //add corresponding elements that match on time
-            List<TimeDataPoint<double>> newts = new List<TimeDataPoint<double>>();
-            foreach (var td in ts1)
-            {
-                var answ = td.Value * multiplier;
-                newts.Add(new TimeDataPoint<double>(td.Date, answ));
-            }
+            var mints = from td in timeseries
+                        select new TSDataPoint<double>(td.Date, td.Value - scalar);
 
-            return new TimeSeries(newts, ts1.Name);
+            return new TimeSeries(mints, timeseries.Name, timeseries.IntegrationOrder);
         }
 
-        public static TimeSeries operator /(TimeSeries ts1, double div)
+        public static TimeSeries operator *(TimeSeries timeseries, double scalar)
         {
             //add corresponding elements that match on time
-            List<TimeDataPoint<double>> newts = new List<TimeDataPoint<double>>();
-            foreach (var td in ts1)
-            {
-                var answ = td.Value / div;
-                newts.Add(new TimeDataPoint<double>(td.Date, answ));
-            }
+            var mults = from ts in timeseries
+                        select new TSDataPoint<double>(ts.Date, ts.Value / scalar);
 
-            return new TimeSeries(newts, ts1.Name);
+            return new TimeSeries(mults, timeseries.Name, timeseries.IntegrationOrder);
+        }
+
+        public static TimeSeries operator /(TimeSeries timeseries, double scalar)
+        {
+            //add corresponding elements that match on time
+            var divts = from ts in timeseries
+                        select new TSDataPoint<double>(ts.Date, ts.Value / scalar);
+
+            return new TimeSeries(divts, timeseries.Name, timeseries.IntegrationOrder);
         }
     }
 

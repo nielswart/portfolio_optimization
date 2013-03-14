@@ -24,22 +24,22 @@ namespace DataSciLib.DataStructures
 
     public class TimeSeriesFactory<T>
     {
-        public static ITimeSeries<T> Create(IEnumerable<TimeDataPoint<T>> timeseries, string name, uint integrationOrder = 1, DataFrequency frequency = DataFrequency.Daily)
+        public static ITimeSeries<T> Create(IEnumerable<TSDataPoint<T>> timeseries, string name, uint integrationOrder = 1, DataFrequency frequency = DataFrequency.Daily)
         {
             return new TimeSeries<T>(timeseries, name, integrationOrder, frequency);
         }
         
-        public static ITimeSeries<T> Create(IEnumerable<TimeDataPoint<T>> timeseries, uint integrationOrder= 1, DataFrequency frequency = DataFrequency.Daily)
+        public static ITimeSeries<T> Create(IEnumerable<TSDataPoint<T>> timeseries, uint integrationOrder= 1, DataFrequency frequency = DataFrequency.Daily)
         {
             return new TimeSeries<T>(timeseries, "Series1", integrationOrder, frequency);
         }
 
-        public static ITimeSeries<T> Create(IEnumerable<TimeDataPoint<T>> timeseries, string name)
+        public static ITimeSeries<T> Create(IEnumerable<TSDataPoint<T>> timeseries, string name)
         {
             return new TimeSeries<T>(timeseries, name, 1);
         }
 
-        public static ITimeSeries<T> Create(IEnumerable<TimeDataPoint<T>> timeseries, uint integrationOrder)
+        public static ITimeSeries<T> Create(IEnumerable<TSDataPoint<T>> timeseries, uint integrationOrder)
         {
             return new TimeSeries<T>(timeseries, "Series1", integrationOrder);
         }
@@ -47,7 +47,7 @@ namespace DataSciLib.DataStructures
         public static ITimeSeries<T> Create(IEnumerable<T> data, uint integrationOrder, DataFrequency freq)
         {
             string name = "series1";
-            List<TimeDataPoint<T>> datapoints = new List<TimeDataPoint<T>>();
+            List<TSDataPoint<T>> datapoints = new List<TSDataPoint<T>>();
 
             switch (freq)
             {
@@ -56,7 +56,7 @@ namespace DataSciLib.DataStructures
                         int count = 0;
                         foreach (var d in data)
                         {
-                            datapoints.Add(new TimeDataPoint<T>(DateTime.Today.AddMonths(-count), d));
+                            datapoints.Add(new TSDataPoint<T>(DateTime.Today.AddMonths(-count), d));
                             count++;
                         }
                     }
@@ -67,7 +67,7 @@ namespace DataSciLib.DataStructures
                         int count = 0;
                         foreach (var d in data)
                         {
-                            datapoints.Add(new TimeDataPoint<T>(DateTime.Today.AddDays(-count), d));
+                            datapoints.Add(new TSDataPoint<T>(DateTime.Today.AddDays(-count), d));
                             count++;
                         }
                     }
@@ -78,7 +78,7 @@ namespace DataSciLib.DataStructures
                         int count = 0;
                         foreach (var d in data)
                         {
-                            datapoints.Add(new TimeDataPoint<T>(DateTime.Today.AddDays(-count), d));
+                            datapoints.Add(new TSDataPoint<T>(DateTime.Today.AddDays(-count), d));
                             count++;
                         }
                     }
@@ -89,7 +89,7 @@ namespace DataSciLib.DataStructures
         }
 
         /// <summary>
-        /// Create a single variable time series object with a specific length, given an enumerable sequance with 'infinite' length
+        /// Create a single variable time series object with a specific length, given an enumerable sequence with 'infinite' length
         /// </summary>
         /// <param name="data">Infinite enumerable sequence</param>
         /// <param name="integrationOrder">The time series integration order, in finance this translates to 0 for returns series and 1 for a price series</param>
@@ -99,7 +99,7 @@ namespace DataSciLib.DataStructures
         public static ITimeSeries<T> Create(IEnumerable<T> data, uint integrationOrder, int numperiods, DataFrequency freq)
         {
             string name = "series1";
-            List<TimeDataPoint<T>> datapoints = new List<TimeDataPoint<T>>();
+            List<TSDataPoint<T>> datapoints = new List<TSDataPoint<T>>();
 
             switch (freq)
             {
@@ -109,7 +109,7 @@ namespace DataSciLib.DataStructures
                         // Use TakeWhile ??
                         foreach (var d in data)
                         {
-                            datapoints.Add(new TimeDataPoint<T>(DateTime.Today.AddMonths(-count), d));
+                            datapoints.Add(new TSDataPoint<T>(DateTime.Today.AddMonths(-count), d));
                             count++;
                             if (count >= numperiods)
                                 break;
@@ -122,7 +122,7 @@ namespace DataSciLib.DataStructures
                         int count = 0;
                         foreach (var d in data)
                         {
-                            datapoints.Add(new TimeDataPoint<T>(DateTime.Today.AddDays(-count), d));
+                            datapoints.Add(new TSDataPoint<T>(DateTime.Today.AddDays(-count), d));
                             count++;
                             if (count >= numperiods)
                                 break;
@@ -135,7 +135,7 @@ namespace DataSciLib.DataStructures
                         int count = 0;
                         foreach (var d in data)
                         {
-                            datapoints.Add(new TimeDataPoint<T>(DateTime.Today.AddDays(-count), d));
+                            datapoints.Add(new TSDataPoint<T>(DateTime.Today.AddDays(-count), d));
                             count++;
                             if (count >= numperiods)
                                 break;
@@ -154,10 +154,10 @@ namespace DataSciLib.DataStructures
             else
             {
                 int c = 0;
-                List<TimeDataPoint<T>> timeseries = new List<TimeDataPoint<T>>();
+                List<TSDataPoint<T>> timeseries = new List<TSDataPoint<T>>();
                 foreach (var d in data)
                 {
-                    timeseries.Add(new TimeDataPoint<T>(datevector[c], d));
+                    timeseries.Add(new TSDataPoint<T>(datevector[c], d));
                     c++;
                 }
                 return new TimeSeries<T>(timeseries, name, integrationOrder);

@@ -11,7 +11,7 @@ namespace DataSciLib.DataStructures
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface ITimeSeries<T> : IEnumerable<TimeDataPoint<T>> 
+    public interface ITimeSeries<T> : IEnumerable<TSDataPoint<T>> 
     {
         uint IntegrationOrder { get; }
 
