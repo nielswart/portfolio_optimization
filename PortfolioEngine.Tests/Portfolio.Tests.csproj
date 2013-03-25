@@ -37,6 +37,10 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LINQtoCSV, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\LinqToCsv.1.2.0.0\lib\LINQtoCSV.dll</HintPath>
+    </Reference>
     <Reference Include="MathNet.Numerics, Version=2.4.0.26, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MathNet.Numerics.2.4.0\lib\net40\MathNet.Numerics.dll</HintPath>
@@ -63,6 +67,7 @@
     <Compile Include="Analytics.Tests\InformationRatioTest.cs" />
     <Compile Include="Analytics.Tests\MarginalReturnsTest.cs" />
     <Compile Include="Analytics.Tests\MarginalRiskTest.cs" />
+    <Compile Include="Optimization.Tests\MinVarianceTest.cs" />
     <Compile Include="PerformanceAnalyticsTests.cs">
       <SubType>Code</SubType>
     </Compile>
