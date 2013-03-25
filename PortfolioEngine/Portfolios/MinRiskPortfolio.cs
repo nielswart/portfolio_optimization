@@ -1,7 +1,11 @@
-﻿using System;
+﻿// Copyright (c) 2012: DJ Swart, AJ Hoffman
+
+using System.Runtime.Serialization;
+using DataSciLib.DataStructures;
+using PortfolioEngine.Settings;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using PerformanceTools;
 
 namespace PortfolioEngine.Portfolios
 {
@@ -9,7 +13,9 @@ namespace PortfolioEngine.Portfolios
     {
         public static IPortfolio CalculateMinVariancePortfolio(this IPortfolio portfolio)
         {
-            throw new NotImplementedException();
+            var minvar = new MVOMinVariance(portfolio);
+            var portf = minvar.Calculate();
+            return portf;
         }
     }
 }

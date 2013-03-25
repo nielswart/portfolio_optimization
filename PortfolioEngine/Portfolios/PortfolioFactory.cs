@@ -19,6 +19,22 @@ namespace PortfolioEngine.Portfolios
         }
     }
 
+    public static class PortfolioExtensions
+    {
+        public static IPortfolio Copy(this IPortfolio samplePortfolio)
+        {
+            Portfolio portf;
+            if (samplePortfolio.Covariance.ContainsKey(samplePortfolio.Name))
+                portf = new Portfolio(samplePortfolio.Name, samplePortfolio.Mean, samplePortfolio.Covariance[samplePortfolio.Name]);
+            else
+                portf = new Portfolio(samplePortfolio.Name, samplePortfolio.Mean, 0);
+
+            portf.AddRange(samplePortfolio);
+            portf.SetConstraints(samplePortfolio.Constraints);
+            return portf;
+        }
+    }
+
     public static class PortfolioTimeSeriesExtensions
     {
 

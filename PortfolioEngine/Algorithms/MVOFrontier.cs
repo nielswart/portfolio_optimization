@@ -31,7 +31,7 @@ namespace PortfolioEngine.Settings
         /// </summary>
         /// <param name="covariance">Covariance Matrix of assets included in portfolio</param>
         /// <param name="mean">Expected return of assets in portfolio</param>
-        public IEnumerable<IPortfolio> Calculate()
+        public IEnumerable<IPortfolio> Calculate(int digits = 4)
         {
             // MVO using quadratic programming
             // Optimal portfolio is:
@@ -47,31 +47,36 @@ namespace PortfolioEngine.Settings
             var meanReturns = from sp in _samplePortfolio
                               select sp.Mean;
 
-            var cov = from sp in _samplePortfolio
-                      select new KeyValuePair<string, Dictionary<string, double>>(sp.Name, sp.Covariance);
+            var cov = from ins in _samplePortfolio
+                      select new KeyValuePair<string, Dictionary<string, double>>(ins.ID, ins.Covariance);
 
             var covariance = CovarianceMatrix.Create(cov.ToDictionary(a => a.Key, b => b.Value));
-            List<Portfolio> portfolios = new List<Portfolio>();
+            List<IPortfolio> portfolios = new List<IPortfolio>();
 
             // generate sequence of target returns for the efficient frontier and minimum variance locus
-            var targetReturns = new double[_numPortfolios].Seq(meanReturns.Min(), meanReturns.Max(), _numPortfolios);
+            var targetReturns = new double[_numPortfolios].Seq(meanReturns.Min(), meanReturns.Max(), (int)_numPortfolios, digits);
+            // For every target return find the minimum variance portfolio
             for (int i = 0; i < _numPortfolios; i++)
             {
-                //PerformanceLogger.Start("MVOFrontier", "Calculate", "PortfolioConfig");
                 var portfConf = new ConfigurationManager(_samplePortfolio, targetReturns[i]);
-                //PerformanceLogger.Stop("MVOFrontier", "Calculate", "PortfolioConfig");
-
-                //PerformanceLogger.Start("MVOFrontier", "Calculate", "QuadProg.Solve");
-
-                var result = QuadProg.Solve(covariance, null, portfConf.Amat.Transpose(), portfConf.Bvec, portfConf.NumEquals);
-                //PerformanceLogger.Stop("MVOFrontier", "Calculate", "QuadProg.Solve");
-                
-                var portf = PortfolioFactory.Create(_samplePortfolio, i.ToString(), targetReturns[i], result.Item2);
-
-                for (int c = 0; c < result.Item1.Length; c++)
+                OptimizationResult result;
+                try
                 {
-                    portf.SetWeight(_samplePortfolio[c].Name, result.Item1[c]);
+                    result = QuadProg.Solve(covariance, null, portfConf.Amat.Transpose(), portfConf.Bvec, portfConf.NumEquals);
                 }
+                catch (ApplicationException e)
+                {
+                    // Solution not found - create NaN Portfolio
+                    result = new OptimizationResult(new double[]{double.NaN }, double.NaN);
+                    // Log error
+                    Console.WriteLine(e.Message);
+                }
+                var portf = PortfolioFactory.Create(_samplePortfolio, i.ToString(), targetReturns[i], result.Value);
+                for (int c = 0; c < result.Solution.Length; c++)
+                {
+                    portf[_samplePortfolio[c].ID].Weight = result.Solution[c];
+                }
+                portfolios.Add(portf);
             }
 
             return portfolios;
