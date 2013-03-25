@@ -194,7 +194,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException(e.Message, e);
+                throw new  ApplicationException(e.Message, e);
             }
             if (engine == null)
                 throw new ApplicationException("Could not start R");
@@ -237,7 +237,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException(e.Message);
+                throw new ApplicationException(e.Message);
             }
         }
 
@@ -259,7 +259,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException(e.Message);
+                throw new ApplicationException(e.Message);
             }
             finally
             {
@@ -320,7 +320,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException(e.Message, e);
+                throw new ApplicationException(e.Message, e);
             }
             finally
             {
@@ -368,7 +368,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException(path + " doesn't exist.",e);
+                throw new ApplicationException(path + " doesn't exist.",e);
             }
             finally
             {
@@ -417,7 +417,7 @@ namespace DataSciLib.REngine
                 }
                 catch (SEHException e)
                 {
-                    throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; Function: " + funcname + " could not be executed.", e);
+                    throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; Function: " + funcname + " could not be executed.", e);
                 }
 
                 // Clean up afterwards
@@ -461,11 +461,11 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; Function " + funcname + " could not be executed.", e);
+                throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; Function " + funcname + " could not be executed.", e);
             }
             catch (ParseException pe)
             {
-                throw new REngineException("R Engine has thrown an Exception - expression parsing error; Function " + funcname + " could not be executed.", pe);
+                throw new ApplicationException("R Engine has thrown an Exception - expression parsing error; Function " + funcname + " could not be executed.", pe);
             }
             finally
             {
@@ -501,7 +501,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; Function: " + funcname + " could not be executed.", e);
+                throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; Function: " + funcname + " could not be executed.", e);
             }
             finally
             {
@@ -522,7 +522,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; String could not be created in R.", e);
+                throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; String could not be created in R.", e);
             }
             finally
             {
@@ -543,7 +543,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; String could not be created in R.", e);
+                throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; String could not be created in R.", e);
             }
             finally
             {
@@ -569,7 +569,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; String could not be created in R.", e);
+                throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; String could not be created in R.", e);
             }
             finally
             {
@@ -601,7 +601,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; Bool could not be created in R.", e);
+                throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; Bool could not be created in R.", e);
             }
             finally
             {
@@ -624,7 +624,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; Vector could not be created in R.", e);
+                throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; Vector could not be created in R.", e);
             }
             finally
             {
@@ -644,7 +644,7 @@ namespace DataSciLib.REngine
                 }
                 catch (SEHException e)
                 {
-                    throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; Vector could not be created in R.", e);
+                    throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; Vector could not be created in R.", e);
                 }
                 finally
                 {
@@ -661,7 +661,7 @@ namespace DataSciLib.REngine
                 }
                 catch (SEHException e)
                 {
-                    throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; Vector could not be created in R.", e);
+                    throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; Vector could not be created in R.", e);
                 }
                 finally
                 {
@@ -688,7 +688,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; Vector could not be created in R.", e);
+                throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; Vector could not be created in R.", e);
             }
             finally
             {
@@ -711,7 +711,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; Vector could not be created in R.", e);
+                throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; Vector could not be created in R.", e);
             }
             finally
             {
@@ -734,7 +734,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; Vector could not be created in R.", e);
+                throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; Vector could not be created in R.", e);
             }
             finally
             {
@@ -760,7 +760,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; Matrix could not be created in R.", e);
+                throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; Matrix could not be created in R.", e);
             }
             finally
             {
@@ -803,7 +803,7 @@ namespace DataSciLib.REngine
             }
             catch (SEHException e)
             {
-                throw new REngineException("R Engine has thrown an Exception - memory possibly corrupted; List could not be created in R.", e);
+                throw new ApplicationException("R Engine has thrown an Exception - memory possibly corrupted; List could not be created in R.", e);
             }
             finally
             {

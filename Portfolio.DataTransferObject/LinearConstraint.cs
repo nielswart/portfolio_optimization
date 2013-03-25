@@ -17,10 +17,10 @@ namespace PortfolioEngine
         Relational Relation { get; }
     }
 
-    public class LinearConstraint : IConstraint
+    public class LinearConstraint : IConstraint, IComparable<LinearConstraint>
     {
-        public SortedList<string, double> Coefficients { get; private set; }
-        public double BValue { get; private set; }
+        public Dictionary<string, double> EquationTerms { get; private set; }
+        public double ConstantTerm { get; private set; }
         public Relational Relation { get; private set; }
         
         public LinearConstraint()
@@ -28,10 +28,10 @@ namespace PortfolioEngine
 
         }
 
-        private LinearConstraint(SortedList<string, double> instruments, Relational relation, double value)
+        private LinearConstraint(Dictionary<string, double> instruments, Relational relation, double value)
         {
-            Coefficients = instruments;
-            BValue = value;
+            EquationTerms = instruments;
+            ConstantTerm = value;
             Relation = relation;
         }
 
@@ -46,12 +46,7 @@ namespace PortfolioEngine
         /// <returns></returns>
         public static LinearConstraint Create(IDictionary<string, double> instruments, Relational relation, double value)
         {
-            var sl = new SortedList<string, double>();
-            foreach (var element in instruments)
-            {
-               sl.Add(element.Key, element.Value);
-            }
-            return new LinearConstraint(sl, relation, value);
+            return new LinearConstraint((Dictionary<string, double>)instruments, relation, value);
         }
 
         /// <summary>
@@ -61,11 +56,10 @@ namespace PortfolioEngine
         /// <param name="relation"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static LinearConstraint Create(IEnumerable<string> instruments, Relational relation, double value)
+        public static LinearConstraint Create(IEnumerable<string> instrumentIds, Relational relation, double value)
         {
-            // for every instrument that is also in the universe, set matrix coeffcient to 1, for all others in universe set to 0
-            var sl = new SortedList<string, double>();
-            foreach (var element in instruments)
+            var sl = new Dictionary<string, double>();
+            foreach (var element in instrumentIds)
             {
                 sl.Add(element, 1);
             }
@@ -79,21 +73,25 @@ namespace PortfolioEngine
         /// <param name="relation"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static LinearConstraint Create(string instrument, Relational relation, double value)
+        public static LinearConstraint Create(string instrumentId, Relational relation, double value)
         {
-            throw new NotImplementedException();
+            var sl = new Dictionary<string, double>();
+            sl.Add(instrumentId, 1);
+            return new LinearConstraint(sl, relation, value);
         }
 
         public int CompareTo(LinearConstraint constrB)
         {
-            if (this.Relation != Relational.Equal && constrB.Relation == Relational.Equal)
+            if (this.Relation == Relational.Equal && constrB.Relation != Relational.Equal)
             {
-                return 1;
-            }
-            else if (this.Relation == Relational.Equal)
                 return -1;
-            else
+            }
+            else if (this.Relation == Relational.Larger && constrB.Relation == Relational.Smaller)
+                return -1;
+            else if (this.Relation == constrB.Relation)
                 return 0;
+            else
+                return 1;
         }
 
         #endregion

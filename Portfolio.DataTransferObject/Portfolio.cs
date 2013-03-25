@@ -12,14 +12,11 @@ namespace PortfolioEngine.Portfolios
     public interface IPortfolio : IList<IInstrument>
     {
         string Name { get; }
-
-        List<LinearConstraint> Constraints { get; }
-
         double Mean { get; }
-
+        double StdDev { get; }
+        List<LinearConstraint> Constraints { get; }
         Dictionary<string, double> Covariance { get; set; }
-
-        void SetWeight(string code, double weight);
+        IInstrument this[string id] { get; }
     }
 
     /// <summary>
@@ -46,44 +43,58 @@ namespace PortfolioEngine.Portfolios
             private set;
         }
 
+        public double StdDev
+        {
+            get
+            {
+                if (Covariance.ContainsKey(this.Name))
+                    return Math.Round(Math.Sqrt(Covariance[this.Name]),4);
+                else
+                    return double.NaN;
+            }
+        }
+
         public Dictionary<string, double> Covariance
         {
             get;
             set;
         }
 
+        // Gets the element with the sepcified ID
+        public IInstrument this[string id]
+        {
+            get { return this.Find((a) => a.ID == id); }
+        }
         #endregion
-
-        LinearConstraint _constraintHandle;
 
         #region Constructors
         public Portfolio()
         {
             Name = "Portfolio";
-            _constraintHandle = new LinearConstraint();
+            Covariance = new Dictionary<string, double>();
         }
 
         public Portfolio(string name)
         {
             Name = name;
+            Covariance = new Dictionary<string, double>();
+            Constraints = new List<LinearConstraint>();
         }
 
         public Portfolio(string name, double mean, double variance)
         {
             Name = name;
             Mean = mean;
+            Covariance = new Dictionary<string, double>();
             Covariance[this.Name] = variance;
+            Constraints = new List<LinearConstraint>();
         }
 
         #endregion
 
         public void SetWeight(string name, double weight)
         {
-            var instrument = from ins in this
-                             where ins.Name == name
-                             select ins;
-
-            instrument.First().Weight = weight;
+            var instrument = this[name].Weight = weight;
         }
 
         public void SetConstraints(IEnumerable<LinearConstraint> constraints)
@@ -95,7 +106,7 @@ namespace PortfolioEngine.Portfolios
         public void AddAllInvestedConstraint()
         {
             var universe = from instrument in this
-                           select instrument.Name;
+                           select instrument.ID;
 
             Constraints.Add(LinearConstraint.Create(universe, Relational.Equal, 1));
         }
@@ -105,7 +116,7 @@ namespace PortfolioEngine.Portfolios
             foreach (var instrument in this)
             {
                 // No short positions allowed -> min = 0
-                Constraints.Add(LinearConstraint.Create(instrument.Name, Relational.Larger, 0));
+                Constraints.Add(LinearConstraint.Create(instrument.ID, Relational.Larger, 0));
             }
         }
 

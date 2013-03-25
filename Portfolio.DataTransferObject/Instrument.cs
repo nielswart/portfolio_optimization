@@ -10,7 +10,7 @@ namespace PortfolioEngine
         /// <summary>
         /// 
         /// </summary>
-        string Name { get; }
+        string ID { get; }
 
         double Weight { get; set; }
 
@@ -22,7 +22,7 @@ namespace PortfolioEngine
     public class Instrument : IInstrument
     {
         #region Properties
-        public string Name { get; private set; }
+        public string ID { get; private set; }
 
         public double Weight { get; set; }
 
@@ -39,14 +39,19 @@ namespace PortfolioEngine
         }
         #endregion
 
-        public Instrument(string name)
+        public Instrument(string name, double mean, Dictionary<string, double> cov)
         {
-
+            this.ID = name;
+            this.Mean = mean;
+            this.Covariance = cov;
         }
 
-        public Instrument(string name, double weight)
+        public Instrument(string name, double mean, Dictionary<string, double> cov, double weight)
         {
-
+            this.ID = name;
+            this.Mean = mean;
+            this.Covariance = cov;
+            this.Weight = weight;
         }
     }
 }

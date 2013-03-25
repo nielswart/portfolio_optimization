@@ -24,14 +24,23 @@ namespace DataSciLib.DataStructures
             return vector;
         }
 
-        public static double[] Seq(this double[] vector, double from, double to, uint num)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="num"></param>
+        /// <param name="precision">Number of fractional digits after rounding</param>
+        /// <returns></returns>
+        public static double[] Seq(this double[] vector, double from, double to, int num, int digits)
         {
             vector = new double[num];
             double step = (to - from) / num;
             vector[0] = from;
             for (int i = 1; i < num - 1; i++)
             {
-                vector[i] = vector[i - 1] + step;
+                vector[i] = Math.Round(vector[i - 1] + step, digits);
             }
 
             vector[num - 1] = to;
@@ -42,8 +51,6 @@ namespace DataSciLib.DataStructures
         {
             throw new NotImplementedException();
         }
-
-        //public static double[] Round
 
         public static double[] Ones(this double[] vector, int num)
         {
@@ -75,21 +82,10 @@ namespace DataSciLib.DataStructures
             return mat;
         }
 
-        public static double Min(this double[] vector)
-        {
-            return vector.Minimum();
-        }
-
-        public static double Max(this double[] vector)
-        {
-            return vector.Maximum();
-        }
-
         public static double[] Range(this double[] vector)
         {
-            return new double[] { vector.Min(), vector.Max() };
+            return new double[] { vector.Minimum(), vector.Maximum() };
         }
-
 
         /// <summary>
         /// Convert a one dimensional array (vector) to a multi-dimensional array (matrix)
