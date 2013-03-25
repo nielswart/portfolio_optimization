@@ -28,11 +28,11 @@ namespace PortfolioEngineLib.Tests
         /// Test the return value
         /// </summary>
         [TestMethod]
-        public void Result()
+        public void ItRuns()
         {
             TimeSeriesFactory<double>.SampleData.RandomSeed = 8;
             ITimeSeries<double> asset = TimeSeriesFactory<double>.SampleData.Gaussian(mu_a, sigma_a, numperiods: elements, freq: DataFrequency.Daily);
-            var res = Analytics.InformationRatio(asset, benchmark);
+            var res = PortfolioAnalytics.InformationRatio(asset, benchmark);
 
             Console.WriteLine(res);
         }

@@ -11,7 +11,7 @@ namespace DataSciLib.Tests
         public void CreateFromDelimitedFileTest()
         {
             Console.WriteLine(System.IO.Directory.GetCurrentDirectory());
-            var cov = CovarianceMatrix.CreateFromDelimitedFile("../../data/covariance.csv");
+            
         }
     }
 }

@@ -39,21 +39,21 @@ namespace PortfolioEngineLib.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void NegativeRiskfreeRate()
         {
-            var res = Analytics.RealisedAlpha(asset, benchmark, -0.04);
+            var res = PortfolioAnalytics.RealisedAlpha(asset, benchmark, -0.04);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void LargeRiskfreeRate()
         {
-            var res = Analytics.RealisedAlpha(asset, benchmark, 1.05);
+            var res = PortfolioAnalytics.RealisedAlpha(asset, benchmark, 1.05);
         }
 
         [TestMethod]
         public void ResultDailyData()
         {
             var riskfree = 0.05;
-            var res = Analytics.RealisedAlpha(asset, benchmark, riskfree);
+            var res = PortfolioAnalytics.RealisedAlpha(asset, benchmark, riskfree);
             var ralpha = CAPM.Alpha(timeSeries.Create(asset), timeSeries.Create(benchmark), riskfree).First();
             Assert.AreEqual(ralpha, res, 0.001);
         }

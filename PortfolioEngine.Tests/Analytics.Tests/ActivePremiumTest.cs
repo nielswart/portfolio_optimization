@@ -29,22 +29,22 @@ namespace PortfolioEngine.Tests
         /// The return on an investment's annualised return minus the benchmark's annualised return
         /// </summary>
         [TestMethod]
-        public void DailyDataResult()
+        public void CorrelatedDataResultInRange()
         {
             ITimeSeries<double> asset = TimeSeriesFactory<double>.SampleData.Gaussian(mu_a, sigma_a, numperiods: elements, freq: DataFrequency.Daily);
 
-            var res = Analytics.ActivePremium(asset, benchmark);
+            var res = PortfolioAnalytics.ActivePremium(asset, benchmark);
             var rap = (mu_a - mu_b) * 252;
             Assert.AreEqual(rap, res, sigma_a * Math.Sqrt(252));
         }
 
         [TestMethod]
-        public void Uncorrelated()
+        public void UncorrelatedDataResultInRange()
         {
             TimeSeriesFactory<double>.SampleData.RandomSeed = 8;
             ITimeSeries<double> asset = TimeSeriesFactory<double>.SampleData.Gaussian(mu_a, sigma_a, numperiods: elements, freq: DataFrequency.Daily);
 
-            var res = Analytics.ActivePremium(asset, benchmark);
+            var res = PortfolioAnalytics.ActivePremium(asset, benchmark);
             var rap = (mu_a - mu_b) * 252;
             Assert.AreEqual(rap, res, sigma_a*Math.Sqrt(252));
         }

@@ -32,7 +32,7 @@ namespace PortfolioEngine.Tests
             TimeSeriesFactory<double>.SampleData.RandomSeed = 5;
 
             // Daily data
-            var ard = PortfolioEngine.Analytics.AnnualisedReturn(dailySampleTS);
+            var ard = PortfolioEngine.PortfolioAnalytics.AnnualisedReturn(dailySampleTS);
             Assert.IsNotNull(ard);
             var returns = Normal.Samples(new Random(5), 0.01, 0.02).Take(elements);
             Assert.AreEqual(Statistics.Mean(returns) * 252, ard, 0.001);
@@ -46,7 +46,7 @@ namespace PortfolioEngine.Tests
             TimeSeriesFactory<double>.SampleData.RandomSeed = 5;
 
             // Monthly Data
-            var arm = PortfolioEngine.Analytics.AnnualisedReturn(monthlySampleTS);
+            var arm = PortfolioEngine.PortfolioAnalytics.AnnualisedReturn(monthlySampleTS);
             Assert.IsNotNull(arm);
             var returns = Normal.Samples(new Random(5), 0.01, 0.02).Take(elements);
             Assert.AreEqual(Statistics.Mean(returns) * 12, arm, 0.001);

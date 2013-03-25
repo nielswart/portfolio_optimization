@@ -40,7 +40,7 @@ namespace PortfolioEngineLib.Tests
         public void SimpleRegression()
         {
             var riskfree = 0.04;
-            var capm = Analytics.CAPModel(asset, benchmark, riskfree);
+            var capm = PortfolioAnalytics.CAPModel(asset, benchmark, riskfree);
 
             var ralpha = CAPM.Alpha(timeSeries.Create(asset), timeSeries.Create(benchmark), riskfree).First();
             Assert.AreEqual(ralpha, capm.Alpha, 0.001);

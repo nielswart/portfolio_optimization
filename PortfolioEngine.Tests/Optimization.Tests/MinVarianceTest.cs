@@ -17,7 +17,7 @@ using LINQtoCSV;
 namespace PortfolioEngine.Tests
 {
     [TestClass]
-    public class EfficientFrontierTests
+    public class MinVarianceTests
     {
 
         internal class CsvDataRow : List<DataRowItem>, IDataRow
@@ -45,7 +45,7 @@ namespace PortfolioEngine.Tests
             var iter = data.GetEnumerator();
             var meankv = from k in cov.Keys
                          let d = iter.MoveNext()
-                         select new KeyValuePair<string, double>(k, Math.Round(iter.Current,4));
+                         select new KeyValuePair<string, double>(k, Math.Round(iter.Current, 4));
 
             mean = meankv.ToDictionary(a => a.Key, b => b.Value);
         }
@@ -55,7 +55,7 @@ namespace PortfolioEngine.Tests
         {
             // Create new portfolio
             var portf = new Portfolio("TestPortfolio");
-            
+
             // Create instruments from data
             var instruments = from k in cov.Keys
                               select new Instrument(k, mean[k], cov[k]);
@@ -77,25 +77,6 @@ namespace PortfolioEngine.Tests
             {
                 Console.WriteLine("Risk {0}, Return {1} ", rr.StdDev, rr.Mean);
             }
-        }
-        
-        [TestMethod]
-        public void EfficientFrontierPerformanceTest()
-        {
-            //OptimizationConstraints constr = new OptimizationConstraints(ConstraintType.LongOnly);
-            //PortfolioSpecification spec = new PortfolioSpecification(numpoints: 50, rfrate: 0);
-            //PortfolioSettings pset = new PortfolioSettings(new List<string> { "DST", "GPL", "ASR" });
-            //pset.AddConstraints(constr);
-            //pset.AddSpecifications(spec);
-
-            int runs = 100;
-            for (int c = 0; c < runs; c++)
-            {
-                PerformanceLogger.Start("EfficientFrontierTests", "EfficientFrontierPerformanceTest", "Optimization.CalcEfficientFrontier");
-                //var res = optimizer.CalcEfficientFrontier(pset, mean, cov);
-                PerformanceLogger.Stop("EfficientFrontierTests", "EfficientFrontierPerformanceTest", "Optimization.CalcEfficientFrontier");
-            }
-            PerformanceLogger.WriteToCSV("performancedata.csv");
         }
     }
 }

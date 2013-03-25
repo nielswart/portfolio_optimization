@@ -29,7 +29,7 @@ namespace PortfolioEngine.Tests
         {
             // General case
             double rf = 0.04;
-            var res = PortfolioEngine.Analytics.SharpeRatio(monthlySampleTS, rf);
+            var res = PortfolioEngine.PortfolioAnalytics.SharpeRatio(monthlySampleTS, rf);
             var shouldbe = (mu*12 - rf) / (Math.Sqrt(12)*sigma);
             // Delta should be the sampling error of the Sharpe Ratio and not that of the mean
             Assert.AreEqual(shouldbe, res, (Math.Sqrt(12) * sigma));
@@ -39,7 +39,7 @@ namespace PortfolioEngine.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void NegativeRiskfreeRate()
         {
-            var res = PortfolioEngine.Analytics.SharpeRatio(monthlySampleTS, -0.04);
+            var res = PortfolioEngine.PortfolioAnalytics.SharpeRatio(monthlySampleTS, -0.04);
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace PortfolioEngine.Tests
         {
             // Create zero std dev time series object
             var ts = TimeSeriesFactory<double>.Create(Enumerable.Repeat(10.0, 100), 1, DataFrequency.Daily);  
-            var res = PortfolioEngine.Analytics.SharpeRatio(ts, 0.04);
+            var res = PortfolioEngine.PortfolioAnalytics.SharpeRatio(ts, 0.04);
             Assert.IsTrue(double.IsInfinity(res));
         }
     }

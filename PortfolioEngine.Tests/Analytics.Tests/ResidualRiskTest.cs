@@ -19,43 +19,22 @@ namespace PortfolioEngineLib.Tests
     public class ResidualRiskTest
     {
         const int elements = 1000;
-        const double mu = 0.01;
-        const double sigma = 0.02;
-        const int seed = 5;
-
-        ITimeSeries<double> asset = TimeSeriesFactory<double>.SampleData.Gaussian(mu, sigma, numperiods: elements, freq: DataFrequency.Daily);
-        ITimeSeries<double> benchmark = TimeSeriesFactory<double>.SampleData.Gaussian(mu, sigma, numperiods: elements, freq: DataFrequency.Daily);
-
-        R Engine;
-
-        [TestInitialize]
-        public void StartEngine()
-        {
-            Engine = R.Instance;
-            Engine.Start(REngineOptions.QuietMode);
-        }
+        const double mu_a = 0.001;
+        const double sigma_a = 0.01;
+        const double mu_b = 0.0015;
+        const double sigma_b = 0.015;
+        
+        ITimeSeries<double> benchmark = TimeSeriesFactory<double>.SampleData.Gaussian(mu_b, sigma_b, numperiods: elements, freq: DataFrequency.Daily);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void NegativeRiskfreeRate()
+        public void ItRuns()
         {
-            var res = Analytics.RealisedAlpha(asset, benchmark, -0.04);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void LargeRiskfreeRate()
-        {
-            var res = Analytics.RealisedAlpha(asset, benchmark, 1.05);
-        }
-
-        [TestMethod]
-        public void ResultDailyData()
-        {
+            TimeSeriesFactory<double>.SampleData.RandomSeed = 11;
+            ITimeSeries<double> asset = TimeSeriesFactory<double>.SampleData.Gaussian(mu_a, sigma_a, numperiods: elements, freq: DataFrequency.Daily);
             var riskfree = 0.05;
-            var res = Analytics.RealisedAlpha(asset, benchmark, riskfree);
-            var ralpha = CAPM.Alpha(timeSeries.Create(asset), timeSeries.Create(benchmark), riskfree).First();
-            Assert.AreEqual(ralpha, res, 0.001);
+            var res = PortfolioAnalytics.ResidualRisk(asset, benchmark, riskfree);
+
+            Console.WriteLine(res);
         }
     }
 }

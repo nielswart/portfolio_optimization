@@ -40,7 +40,7 @@ namespace PortfolioEngineLib.Tests
         public void NegativeRiskfreeRate()
         {
             // Should throw exception for a risk-free rate smaller than 0
-            var res = Analytics.RealisedBeta(asset, benchmark, -0.04);
+            var res = PortfolioAnalytics.RealisedBeta(asset, benchmark, -0.04);
         }
 
         [TestMethod]
@@ -48,14 +48,14 @@ namespace PortfolioEngineLib.Tests
         public void LargeRiskfreeRate()
         {
             // Should throw exception for a risk-free rate larger than 1
-            var res = Analytics.RealisedBeta(asset, benchmark, 1.05);
+            var res = PortfolioAnalytics.RealisedBeta(asset, benchmark, 1.05);
         }
 
         [TestMethod]
         public void ResultDailyData()
         {
             var riskfree = 0.05;
-            var res = Analytics.RealisedBeta(asset, benchmark, riskfree);
+            var res = PortfolioAnalytics.RealisedBeta(asset, benchmark, riskfree);
             var rbeta = CAPM.Beta(timeSeries.Create(asset), timeSeries.Create(benchmark), riskfree).First();
             Assert.AreEqual(rbeta, res, 0.001);
         }

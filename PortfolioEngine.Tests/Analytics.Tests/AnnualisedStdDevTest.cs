@@ -32,7 +32,7 @@ namespace PortfolioEngine.Tests
             TimeSeriesFactory<double>.SampleData.RandomSeed = seed;
 
             // Monthly data test
-            var sdm = Analytics.AnnualisedStdDev(monthlySampleTS);
+            var sdm = PortfolioAnalytics.AnnualisedStdDev(monthlySampleTS);
             Assert.IsNotNull(sdm);
             Assert.AreEqual(sigma * Math.Sqrt(12), sdm, sigma);
         }
@@ -46,7 +46,7 @@ namespace PortfolioEngine.Tests
 
             // Monthly data test
             var returns1 = Normal.Samples(new Random(5), 0.01, 0.02).Take(elements);
-            var sdm = Analytics.AnnualisedStdDev(monthlySampleTS);
+            var sdm = PortfolioAnalytics.AnnualisedStdDev(monthlySampleTS);
             Assert.IsNotNull(sdm);
             Assert.AreEqual(Statistics.StandardDeviation(returns1) * Math.Sqrt(12), sdm, 0.001);
         }
@@ -55,7 +55,7 @@ namespace PortfolioEngine.Tests
         public void ZeroChangeData()
         {
             var ts = TimeSeriesFactory<double>.Create(Enumerable.Repeat(10.0, 100), 1, DataFrequency.Daily);
-            var sd = Analytics.AnnualisedStdDev(ts);
+            var sd = PortfolioAnalytics.AnnualisedStdDev(ts);
 
             Assert.AreEqual(0, sd);
         }

@@ -33,7 +33,7 @@ namespace PortfolioEngineLib.Tests
             TimeSeriesFactory<double>.SampleData.RandomSeed = 8;
 
             ITimeSeries<double> asset = TimeSeriesFactory<double>.SampleData.Gaussian(mu_a, sigma_a, numperiods: elements, freq: DataFrequency.Daily);
-            var res = Analytics.TrackingError(asset, benchmark);
+            var res = PortfolioAnalytics.TrackingError(asset, benchmark);
             var te = (asset.AsTimeSeries() - benchmark.AsTimeSeries()).AnnualisedStdDev();
             Assert.AreEqual(te, res, 0.001);
         }
