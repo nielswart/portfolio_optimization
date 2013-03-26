@@ -68,9 +68,6 @@
     <Compile Include="Analytics.Tests\MarginalReturnsTest.cs" />
     <Compile Include="Analytics.Tests\MarginalRiskTest.cs" />
     <Compile Include="Optimization.Tests\MinVarianceTest.cs" />
-    <Compile Include="PerformanceAnalyticsTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Optimization.Tests\EfficientFrontierTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Analytics.Tests\RealisedAlphaTest.cs" />
