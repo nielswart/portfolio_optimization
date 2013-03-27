@@ -1,67 +1,72 @@
-﻿// Copyright (c) 2012: DJ Swart, AJ Hoffman
+﻿// Copyright (c) 2013: DJ Swart, AJ Hoffman
 //
 
-using DataSciLib.DataStructures;
+//#define RDEP
+
 using DataSciLib.REngine;
 using PortfolioEngine.Portfolios;
-using PortfolioEngine.Settings;
-using System;
-using System.Collections.Generic;
 
 namespace PortfolioEngine
 {
     /// <summary>
-    /// Portfolio Manager class - API for interacting with the PortfolioEngine library
+    /// API for calculating various Markowitz Mean-variance portfolios using constraint optimization
     /// </summary>
     public sealed class PortfolioOptimizer
     {
+#if RDEP
         /// <summary>
-        /// 
+        /// Optimization Engine Instance
         /// </summary>
         public static R Engine;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public string WarningMessage { get; private set; }
-
-        /// <summary>
-        /// Creates an instance of the R Engine,
-        /// Loads the required R packages for portfolio optimization,
-        /// Set the working directory to the path specified in the App.config file - key: "workingdir",
-        /// Load the Workspace (.RData) file located in the working directory,
-        /// Sets the dataset name to the value specified in the App.config file - key: "DataSetName",
-        /// </summary>
-        public PortfolioOptimizer()
+        private static bool _initialized = false;
+        private static void _initialize()
         {
             Engine = R.Instance;
-            Engine.Start(REngineOptions.QuietMode);
-            WarningMessage = "No warnings";
+            if (!Engine.IsRunning)
+                Engine.Start(REngineOptions.QuietMode);
+
+            _initialized = true;
         }
 
         /// <summary>
-        /// Use this constructor if you manage the creation and destruction of the R Engine,
-        /// Loads the required R packages for portfolio optimization,
-        /// Set the working directory to the path specified in the App.config file - key: "workingdir",
-        /// Load the Workspace (.RData) file located in the working directory,
-        /// Sets the dataset name to the value specified in the App.config file - key: "DataSetName",
+        /// Initialize the PortfolioOptimizer optimization engine
         /// </summary>
-        /// <param name="_engine">Instance of the R Engine</param>
-        public PortfolioOptimizer(R _engine)
+        public static void Initialize()
         {
-            Engine = _engine;
-            Engine.Start(REngineOptions.QuietMode);
-            WarningMessage = "No warnings";
+            _initialize();
         }
+#endif
 
-        public IPortfolioCollection CalcEfficientFrontier(IPortfolio portfolio, double riskFreeRate, uint numberOfPortfolios)
+        /// <summary>
+        /// Calculate the Efficient Frontier and Minimum Variance locus using the universe of assets and constraints defined in <paramref name="portfolio"/>
+        /// </summary>
+        /// <param name="portfolio">The portfolio definition</param>
+        /// <param name="riskFreeRate">The risk-free rate specified as a fractional decimal value e.g. 0.05 for 5%</param>
+        /// <param name="numberOfPortfolios">The number of portfolios in the efficient frontier locus</param>
+        /// <returns>A collection of portfolios</returns>
+        public static IPortfolioCollection CalcEfficientFrontier(IPortfolio portfolio, double riskFreeRate, uint numberOfPortfolios)
         {
+#if RDEP
+            if(!_initialized)
+                Initialize();
+#endif
             PortfolioCollection frontier = new PortfolioCollection("Efficient Frontier", riskFreeRate);
             return frontier.CalculateMVFrontier(portfolio, numberOfPortfolios);
         }
 
-        public IPortfolio CalcMinimumVariance(IPortfolio portfolio, double riskFreeRate)
+        /// <summary>
+        /// Calculate the Global Minimum Variance Portfolio using the universe of assets and constraints defined in <paramref name="portfolio"/>
+        /// </summary>
+        /// <param name="portfolio">The portfolio definition</param>
+        /// <param name="riskFreeRate">The risk-free rate specified as a fractional decimal value e.g. 0.05 for 5%</param>
+        /// <returns>The Global Minimum Variance portfolio as an instance that implements <typeparamref name="IPortfolio"/></returns>
+        public static IPortfolio CalcMinimumVariance(IPortfolio portfolio, double riskFreeRate)
         {
+ #if RDEP
+            if(!_initialized)
+                Initialize();
+#endif
             return portfolio.CalculateMinVariancePortfolio();
         }
     }

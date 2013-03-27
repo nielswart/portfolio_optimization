@@ -7,6 +7,9 @@ using DataSciLib.DataStructures;
 
 namespace PortfolioEngine.Portfolios
 {
+    /// <remarks>
+    /// Factory class for creating instances that implements the IPortfolio interface
+    /// </remarks>
     public class PortfolioFactory
     {
         public static IPortfolio Create(IPortfolio samplePortfolio, string name, double mean, double variance)

@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\MVOFrontier_R.cs" />
     <Compile Include="AnalyticsAPI.cs" />
     <Compile Include="Portfolios\MinRiskPortfolio.cs" />
     <Compile Include="Algorithms\MVOFrontier.cs" />
@@ -120,13 +121,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataSciLib.REngine\DataSciLib.REngine.csproj">
+      <Project>{b3c91386-5d93-4703-9267-e4db51c1184b}</Project>
+      <Name>DataSciLib.REngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataSciLib\DataSciLib.csproj">
       <Project>{0e377e47-2dd9-40bb-aa4c-47eb38d6503d}</Project>
       <Name>DataSciLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PerformanceLogger\PerformanceTools.csproj">
-      <Project>{01c7bac6-e032-4cde-85e8-f7f8ef5dd453}</Project>
-      <Name>PerformanceTools</Name>
     </ProjectReference>
     <ProjectReference Include="..\Portfolio.DataTransferObject\Portfolio.DataStructures.csproj">
       <Project>{D14BDB69-D1D7-4F23-B175-E0F23BBBC809}</Project>

@@ -1,11 +1,8 @@
-﻿// Copyright (c) 2012: DJ Swart, AJ Hoffman
+﻿// Copyright (c) 2013: DJ Swart, AJ Hoffman
 
-using System.Runtime.Serialization;
-using DataSciLib.DataStructures;
+//#define RDEP
+
 using PortfolioEngine.Settings;
-using System;
-using System.Collections.Generic;
-using PerformanceTools;
 
 namespace PortfolioEngine.Portfolios
 {
@@ -13,9 +10,13 @@ namespace PortfolioEngine.Portfolios
     {
         public static IPortfolioCollection CalculateMVFrontier(this PortfolioCollection portfCol, IPortfolio samplePortf, uint numPortfolios)
         {
+#if(RDEP)
+            var mvfrontier = new MVOFrontier_R(samplePortf, numPortfolios);
+            var portfCollection = mvfrontier.Calculate();
+#else
             var mvfrontier = new MVOFrontier(samplePortf, numPortfolios);
             var portfCollection = mvfrontier.Calculate();
-
+#endif
             portfCol.AddRange(portfCollection);
 
             return portfCol;

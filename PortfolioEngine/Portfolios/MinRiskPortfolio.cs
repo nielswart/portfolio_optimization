@@ -1,11 +1,6 @@
 ﻿// Copyright (c) 2012: DJ Swart, AJ Hoffman
 
-using System.Runtime.Serialization;
-using DataSciLib.DataStructures;
 using PortfolioEngine.Settings;
-using System;
-using System.Collections.Generic;
-using PerformanceTools;
 
 namespace PortfolioEngine.Portfolios
 {
