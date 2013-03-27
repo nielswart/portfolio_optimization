@@ -1,14 +1,7 @@
 ﻿
 using DataSciLib.REngine;
-using System;
-using DataSciLib;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using RDotNet;
-using DataSciLib.DataStructures;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace REngine.Tests
 {
@@ -24,7 +17,6 @@ namespace REngine.Tests
             Engine.Start(REngineOptions.QuietMode);
         }
         
-
         [TestMethod]
         public void IsNull()
         {

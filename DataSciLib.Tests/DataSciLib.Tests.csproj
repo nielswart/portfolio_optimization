@@ -94,6 +94,10 @@
     <Content Include="App_Readme\MathNet.Numerics.readme.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataSciLib.REngine\DataSciLib.REngine.csproj">
+      <Project>{b3c91386-5d93-4703-9267-e4db51c1184b}</Project>
+      <Name>DataSciLib.REngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataSciLib\DataSciLib.csproj">
       <Project>{0e377e47-2dd9-40bb-aa4c-47eb38d6503d}</Project>
       <Name>DataSciLib</Name>
