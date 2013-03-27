@@ -20,9 +20,7 @@ namespace PortfolioEngine.Portfolios
     }
 
     /// <summary>
-    /// Represents the generic portfolio with specific targets for either the weights or the risk and return, therefore any feasible portfolio
-    /// - Is a base class for many of the special portfolio classes
-    /// - Implements the IPortfolio interface
+    /// 
     /// </summary>
     [DataContract]
     public class Portfolio : List<IInstrument>, IPortfolio
