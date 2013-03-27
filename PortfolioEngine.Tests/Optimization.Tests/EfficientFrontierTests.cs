@@ -19,27 +19,17 @@ namespace PortfolioEngine.Tests
     [TestClass]
     public class EfficientFrontierTests
     {
-
-        internal class CsvDataRow : List<DataRowItem>, IDataRow
-        {
-
-        }
-
-        PortfolioOptimizer optimizer;
         Dictionary<string, double> mean;
         CovarianceMatrix cov;
 
         [TestInitialize]
-        public void StartEngine()
+        public void InitializeData()
         {
-            R Engine = R.Instance;
-            Engine.Start(REngineOptions.QuietMode);
-
             // Load data
-            cov = CovarianceMatrix.Create("D:/repos/windows/portfolio_optimization/handpickedcovariance.csv");
+            cov = CovarianceMatrix.Create("D:/repos/windows/portfolio_optimization/datasetcov.csv");
 
-            var norm = new Normal(0.008, 0.02);
-            norm.RandomSource = new Random(11);
+            var norm = new Normal(0.0175, 0.02);
+            norm.RandomSource = new Random(125);
             var data = norm.Samples();
 
             var iter = data.GetEnumerator();
@@ -48,6 +38,8 @@ namespace PortfolioEngine.Tests
                          select new KeyValuePair<string, double>(k, Math.Round(iter.Current,4));
 
             mean = meankv.ToDictionary(a => a.Key, b => b.Value);
+
+            //PortfolioOptimizer.Initialize();
         }
 
         [TestMethod]
@@ -68,11 +60,11 @@ namespace PortfolioEngine.Tests
 
             //
             double rf = 0.05;
-            optimizer = new PortfolioOptimizer();
-            var res = optimizer.CalcEfficientFrontier(portf, rf, 50);
+            var res = PortfolioOptimizer.CalcEfficientFrontier(portf, rf, 50);
             var riskreturn = from p in res
                              select new { p.StdDev, p.Mean };
 
+        
             foreach (var rr in riskreturn)
             {
                 Console.WriteLine("Risk {0}, Return {1} ", rr.StdDev, rr.Mean);
@@ -82,20 +74,64 @@ namespace PortfolioEngine.Tests
         [TestMethod]
         public void EfficientFrontierPerformanceTest()
         {
-            //OptimizationConstraints constr = new OptimizationConstraints(ConstraintType.LongOnly);
-            //PortfolioSpecification spec = new PortfolioSpecification(numpoints: 50, rfrate: 0);
-            //PortfolioSettings pset = new PortfolioSettings(new List<string> { "DST", "GPL", "ASR" });
-            //pset.AddConstraints(constr);
-            //pset.AddSpecifications(spec);
+            // Create new portfolio
+            var portf = new Portfolio("TestPortfolio");
+
+            // Create instruments from data
+            var instruments = from k in cov.Keys
+                              select new Instrument(k, mean[k], cov[k]);
+
+            portf.AddRange(instruments);
+
+            // Add portfolio constraints
+            portf.AddAllInvestedConstraint();
+            portf.AddLongOnlyConstraint();
+            double rf = 0.05;
 
             int runs = 100;
             for (int c = 0; c < runs; c++)
             {
                 PerformanceLogger.Start("EfficientFrontierTests", "EfficientFrontierPerformanceTest", "Optimization.CalcEfficientFrontier");
-                //var res = optimizer.CalcEfficientFrontier(pset, mean, cov);
+                var res = PortfolioOptimizer.CalcEfficientFrontier(portf, rf, 50);
+                Console.WriteLine(c);
                 PerformanceLogger.Stop("EfficientFrontierTests", "EfficientFrontierPerformanceTest", "Optimization.CalcEfficientFrontier");
             }
             PerformanceLogger.WriteToCSV("performancedata.csv");
+        }
+
+        [TestMethod]
+        public void MaxSharpeRatioPortfolioTest()
+        {
+            // Create new portfolio
+            var portf = new Portfolio("TestPortfolio");
+
+            // Create instruments from data
+            var instruments = from k in cov.Keys
+                              select new Instrument(k, mean[k], cov[k]);
+
+            portf.AddRange(instruments);
+
+            // Add portfolio constraints
+            portf.AddAllInvestedConstraint();
+            portf.AddLongOnlyConstraint();
+
+            //
+            double rf = 0.05/12;
+            var res = PortfolioOptimizer.CalcEfficientFrontier(portf, rf, 50);
+            var metrics = (from p in res
+                          let sharpe = PortfolioAnalytics.SharpeRatio(p, rf)
+                          select new {p.StdDev, p.Mean, sharpe});
+
+            foreach (var m in metrics)
+            {
+                Console.WriteLine("Risk {0}, Return {1}, Sharpe {2}, Sharpe Ratio {3} ", m.StdDev, m.Mean, (m.Mean-rf)/m.StdDev, m.sharpe);
+            }
+
+            var maxsharpe = (from p in res
+                             let sharpe = PortfolioAnalytics.SharpeRatio(p, rf)
+                             select sharpe).Max();
+
+            Console.WriteLine("Max Sharpe Ratio Portfolio {0}", maxsharpe);
         }
     }
 }

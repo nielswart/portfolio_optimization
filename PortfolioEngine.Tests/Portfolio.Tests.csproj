@@ -79,18 +79,16 @@
     <Compile Include="Analytics.Tests\VaRTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="returns_20121012.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="small_test.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataSciLib.IO\DataSciLib.IO.csproj">
       <Project>{a06ce60d-dda5-4f26-8ca3-7bf53ca589a2}</Project>
       <Name>DataSciLib.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataSciLib.REngine\DataSciLib.REngine.csproj">
+      <Project>{b3c91386-5d93-4703-9267-e4db51c1184b}</Project>
+      <Name>DataSciLib.REngine</Name>
     </ProjectReference>
     <ProjectReference Include="..\DataSciLib\DataSciLib.csproj">
       <Project>{0e377e47-2dd9-40bb-aa4c-47eb38d6503d}</Project>

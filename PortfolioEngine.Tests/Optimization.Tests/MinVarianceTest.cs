@@ -1,30 +1,16 @@
-﻿using System;
+﻿using DataSciLib.DataStructures;
+using MathNet.Numerics.Distributions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PortfolioEngine.Portfolios;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PortfolioEngine;
-using PortfolioEngine.Portfolios;
-using DataSciLib.REngine;
-using DataSciLib.DataStructures;
-using PortfolioEngine.Settings;
-using DataSciLib;
-using MathNet.Numerics.Distributions;
-using PerformanceTools;
-using DataSciLib.IO;
-using LINQtoCSV;
 
 namespace PortfolioEngine.Tests
 {
     [TestClass]
     public class MinVarianceTests
     {
-
-        internal class CsvDataRow : List<DataRowItem>, IDataRow
-        {
-
-        }
-
         PortfolioOptimizer optimizer;
         Dictionary<string, double> mean;
         CovarianceMatrix cov;
@@ -32,11 +18,8 @@ namespace PortfolioEngine.Tests
         [TestInitialize]
         public void StartEngine()
         {
-            R Engine = R.Instance;
-            Engine.Start(REngineOptions.QuietMode);
-
             // Load data
-            cov = CovarianceMatrix.Create("D:/repos/windows/portfolio_optimization/handpickedcovariance.csv");
+            cov = CovarianceMatrix.Create("D:/repos/windows/portfolio_optimization/datasetcov.csv");
 
             var norm = new Normal(0.008, 0.02);
             norm.RandomSource = new Random(11);
@@ -68,15 +51,10 @@ namespace PortfolioEngine.Tests
 
             //
             double rf = 0.05;
-            optimizer = new PortfolioOptimizer();
-            var res = optimizer.CalcEfficientFrontier(portf, rf, 50);
-            var riskreturn = from p in res
-                             select new { p.StdDev, p.Mean };
+            var res = PortfolioOptimizer.CalcMinimumVariance(portf, rf);
+            var rr =  new { res.StdDev, res.Mean };
 
-            foreach (var rr in riskreturn)
-            {
-                Console.WriteLine("Risk {0}, Return {1} ", rr.StdDev, rr.Mean);
-            }
+            Console.WriteLine("Risk {0}, Return {1} ", rr.StdDev, rr.Mean);
         }
     }
 }

@@ -2,17 +2,9 @@
 using DataSciLib.REngine;
 using DataSciLib.REngine.PerformanceAnalytics;
 using DataSciLib.REngine.Rmetrics;
-using MathNet.Numerics;
-using MathNet.Numerics.Distributions;
-using MathNet.Numerics.Statistics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PortfolioEngine;
-using PortfolioEngine.Portfolios;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using DataSciLib.Statistics;
 
 namespace PortfolioEngineLib.Tests
 {
