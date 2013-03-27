@@ -1,11 +1,5 @@
 ﻿using DataSciLib.DataStructures;
-using DataSciLib.DataStructures;
-using DataSciLib.REngine;
-using DataSciLib.REngine.Optimization;
-using DataSciLib.Statistics;
-using MathNet.Numerics.LinearAlgebra.Double;
-using PerformanceTools;
-using PortfolioEngine.Portfolios;
+using DataSciLib.Optimization;
 using PortfolioEngine.Portfolios;
 using System;
 using System.Collections.Generic;
@@ -13,6 +7,9 @@ using System.Linq;
 
 namespace PortfolioEngine.Settings
 {
+    /// <remarks>
+    /// 
+    /// </remarks>
     public class MVOMinVariance 
     {
         private IPortfolio _samplePortfolio;
@@ -56,11 +53,12 @@ namespace PortfolioEngine.Settings
             var portfConf = new ConfigurationManager(_samplePortfolio);
             
             OptimizationResult result;
+            double[] dvec = new double[_samplePortfolio.Count].Zeros(_samplePortfolio.Count);
             try
             {
-                result = QuadProg.Solve(covariance, null, portfConf.Amat.Transpose(), portfConf.Bvec, portfConf.NumEquals);
+                result = QuadProg.Solve(covariance, dvec, portfConf.Amat, portfConf.Bvec, portfConf.NumEquals);
             }
-            catch (ApplicationException e)
+            catch (Exception e)
             {
                 // Solution not found - create NaN Portfolio
                 result = new OptimizationResult(new double[] { double.NaN }, double.NaN);

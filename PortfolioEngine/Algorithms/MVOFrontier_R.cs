@@ -1,8 +1,7 @@
 ﻿// Copyright (c) 2013: DJ Swart, AJ Hoffman
 
-
 using DataSciLib.DataStructures;
-using DataSciLib.Optimization;
+using DataSciLib.REngine.Optimization;
 using PortfolioEngine.Portfolios;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using System.Linq;
 
 namespace PortfolioEngine.Settings
 {
-    public class MVOFrontier
+    public class MVOFrontier_R
     {
         private uint _numPortfolios;
         private IPortfolio _samplePortfolio;
@@ -19,7 +18,7 @@ namespace PortfolioEngine.Settings
         /// </summary>
         /// <param name="portfSet"></param>
         /// <param name="meanvar"></param>
-        public MVOFrontier(IPortfolio samplePortfolio, uint numPortfolios)
+        public MVOFrontier_R(IPortfolio samplePortfolio, uint numPortfolios)
         {
             _numPortfolios = numPortfolios;
             _samplePortfolio = samplePortfolio;
@@ -53,8 +52,6 @@ namespace PortfolioEngine.Settings
 
             // generate sequence of target returns for the efficient frontier and minimum variance locus
             var targetReturns = new double[_numPortfolios].Seq(meanReturns.Min(), meanReturns.Max(), (int)_numPortfolios, digits);
-
-            double[] dvec = new double[_samplePortfolio.Count].Zeros(_samplePortfolio.Count);
             // For every target return find the minimum variance portfolio
             for (int i = 0; i < _numPortfolios; i++)
             {
@@ -62,12 +59,12 @@ namespace PortfolioEngine.Settings
                 OptimizationResult result;
                 try
                 {
-                    result = QuadProg.Solve(covariance, dvec, portfConf.Amat, portfConf.Bvec, portfConf.NumEquals);
+                    result = QuadProg.Solve(covariance, null, portfConf.Amat.Transpose(), portfConf.Bvec, portfConf.NumEquals);
                 }
-                catch (Exception e)
+                catch (ApplicationException e)
                 {
                     // Solution not found - create NaN Portfolio
-                    result = new OptimizationResult(new double[]{double.NaN }, double.NaN);
+                    result = new OptimizationResult(new double[] { double.NaN }, double.NaN);
                     // Log error
                     Console.WriteLine(e.Message);
                 }
