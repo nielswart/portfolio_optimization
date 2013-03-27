@@ -38,7 +38,11 @@ namespace DataSciLib.DataStructures
         {
             get
             {
-                throw new NotImplementedException();
+                var ts = from td in _timeDataDict
+                         join d in dates on td.Key equals d
+                         select new TSDataPoint<T>(td.Key, td.Value);
+
+                return new TimeSeries<T>(ts, this.Name, this.IntegrationOrder);
             }
             private set { }
         }
@@ -96,7 +100,6 @@ namespace DataSciLib.DataStructures
             _timeDataDict = new SortedList<DateTime, T>();
         }
 
-
         public TimeSeries(IEnumerable<TSDataPoint<T>> datapoints, string name, uint integrationOrder, DataFrequency freq = DataFrequency.Daily)
         {
             Name = "Series1";
@@ -112,6 +115,7 @@ namespace DataSciLib.DataStructures
         
         #endregion
         
+        /*
         public ITimeSeries<T> Exclude(DateTime date)
         {
             throw new NotImplementedException();
@@ -121,7 +125,7 @@ namespace DataSciLib.DataStructures
         {
             throw new NotImplementedException();
         }
-
+        */
         public IEnumerator<TSDataPoint<T>> GetEnumerator()
         {
             foreach (var td in _timeDataDict)
