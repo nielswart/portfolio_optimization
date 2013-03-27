@@ -62,14 +62,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MathNet.Numerics.2.4.0\lib\net40\MathNet.Numerics.IO.dll</HintPath>
     </Reference>
-    <Reference Include="RDotNet, Version=1.5.0.0, Culture=neutral, PublicKeyToken=5f72f6e23c6920d4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\R.NET.1.5.0\lib\net40\RDotNet.dll</HintPath>
-    </Reference>
-    <Reference Include="RDotNet.NativeLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5f72f6e23c6920d4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\R.NET.1.5.0\lib\net40\RDotNet.NativeLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
@@ -94,17 +86,6 @@
     <Compile Include="Optimization\Optimize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Optimization\QuadProg.cs" />
-    <Compile Include="REngine\PerformanceAnalytics\CAPM.cs" />
-    <Compile Include="REngine\PerformanceAnalytics\PerformanceRatios.cs" />
-    <Compile Include="REngine\PerformanceAnalytics\ReturnMetrics.cs" />
-    <Compile Include="REngine\PerformanceAnalytics\RiskMetrics.cs" />
-    <Compile Include="REngine\Optimization\QuadProg.cs" />
-    <Compile Include="REngine\R.cs" />
-    <Compile Include="REngine\REnums.cs" />
-    <Compile Include="REngine\Rmetrics\RmetricsEnums.cs" />
-    <Compile Include="REngine\Rmetrics\timeSeries.cs" />
-    <Compile Include="REngine\RWorkspace.cs" />
-    <Compile Include="REngine\S4Class.cs" />
     <Compile Include="Statistics\Centre.cs" />
     <Compile Include="Statistics\Model.cs" />
     <Compile Include="Statistics\Relation.cs" />
